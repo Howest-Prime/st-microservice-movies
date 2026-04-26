@@ -1,0 +1,35 @@
+services:
+  movies-db.howestprime-dev: 
+    image: postgres:16
+    container_name: movies-db.howestprime-dev
+    restart : unless-stopped
+    env_file:
+    - ./.movies-db.howestprime.dev.env
+    volumes:
+    - movies-db-data:/var/lib/postgresql/data
+   
+    ports:
+    - "40021:5000"
+    networks:
+     - movies-howestprime-dev
+
+  messagebroker.howestprime-dev:
+    image: cloudamqp/lavinmq:2.7.1
+    container_name: messagebroker.howestprime-dev
+    restart : unless-stopped
+    ports:
+    - "4000:5672"
+    - "4001:15672"
+    networks:
+     - movies-howestprime-dev
+
+volumes:
+  movies-db-data:
+    name: movies-db-data
+
+networks:
+    movies-howestprime-dev:
+      name: movies-howestprime-dev
+
+
+      
