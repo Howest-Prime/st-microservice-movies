@@ -9,13 +9,13 @@ public class Movie: AggregateRoot<MovieId>
     public MovieTitle Title { get; private set; }
     public MovieDescription Description { get; private set; }
     public IReadOnlyList<MovieGenre> Genres { get; private set; }
-    public MovieReleaseYear? ReleaseYear { get; private set; }
-    public MovieDuration? Duration { get; private set; }
+    public MovieReleaseYear ReleaseYear { get; private set; }
+    public MovieDuration Duration { get; private set; }
     public IReadOnlyList<Actor> Actors { get; private set; }
-    public int? AgeRating { get; private set; }
-    public string? PosterUrl { get; private set; }
+    public int AgeRating { get; private set; }
+    public string PosterUrl { get; private set; }
 
-    private Movie(MovieId id, MovieTitle title, MovieDescription description, List<MovieGenre> genres, List<Actor> actors, MovieReleaseYear? releaseYear, MovieDuration? duration, int? ageRating, string? posterUrl) 
+    private Movie(MovieId id, MovieTitle title, MovieDescription description, List<MovieGenre> genres, List<Actor> actors, MovieReleaseYear releaseYear, MovieDuration duration, int ageRating, string posterUrl) 
                 : base(id)
     {
         Title = title;
@@ -28,7 +28,7 @@ public class Movie: AggregateRoot<MovieId>
         PosterUrl = posterUrl;
     }
 
-    public static Movie Create(MovieId id, MovieTitle title, MovieDescription description, List<MovieGenre> genres, MovieReleaseYear? releaseYear, MovieDuration? duration, List<Actor> actors, int? ageRating, string? posterUrl)
+    public static Movie Create(MovieId id, MovieTitle title, MovieDescription description, List<MovieGenre> genres, MovieReleaseYear releaseYear, MovieDuration duration, List<Actor> actors, int ageRating, string posterUrl)
     {
         Movie movie = new Movie(id, title, description, genres, actors, releaseYear, duration, ageRating, posterUrl);
         movie.ValidateState();
@@ -38,8 +38,8 @@ public class Movie: AggregateRoot<MovieId>
                             movie.Title.Value, 
                             movie.Genres.Select(g => g.Value).ToArray(), 
                             movie.Actors.Select(a => a.Value).ToArray(), 
-                            movie.ReleaseYear?.Value, 
-                            movie.Duration?.Value, 
+                            movie.ReleaseYear.Value, 
+                            movie.Duration.Value, 
                             movie.AgeRating, 
                             movie.PosterUrl)
         )               ;

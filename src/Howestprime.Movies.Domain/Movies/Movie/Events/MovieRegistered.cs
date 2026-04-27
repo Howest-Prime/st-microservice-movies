@@ -25,7 +25,7 @@ public class MovieRegistered : MovieDomainEvent
         PosterUrl = posterUrl;
     }
 
-    public static MovieRegistered Create(string movieId, string title, string[] genres, string[] actors, int releaseYear, int duration, int ageRating, string            posterUrl)
+    public static MovieRegistered Create(string movieId, string title, string[] genres, string[] actors, int releaseYear, int duration, int ageRating, string posterUrl)
     {
         return new MovieRegistered(movieId, title, genres, actors, releaseYear, duration, ageRating, posterUrl);
     }
