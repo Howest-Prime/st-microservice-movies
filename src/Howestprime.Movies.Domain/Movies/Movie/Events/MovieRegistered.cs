@@ -15,7 +15,7 @@ public class MovieRegistered : MovieDomainEvent
 
     public string PosterUrl { get; private init; }
 
-    public MovieRegistered(string movieId, string title, string[] genres, DateTime releaseDate, int duration, string[] actors, int ageRating, string posterUrl) 
+    private MovieRegistered(string movieId, string title, string[] genres, DateTime releaseDate, int duration, string[] actors, int ageRating, string posterUrl) 
                         : base(nameof(MovieRegistered))
     {
         MovieId = movieId;
@@ -26,5 +26,10 @@ public class MovieRegistered : MovieDomainEvent
         Actors = actors;
         AgeRating = ageRating;
         PosterUrl = posterUrl;
+    }
+
+    public static MovieRegistered Create(string movieId, string title, string[] genres, DateTime releaseDate, int duration, string[] actors, int ageRating, string posterUrl)
+    {
+        return new MovieRegistered(movieId, title, genres, releaseDate, duration, actors, ageRating, posterUrl);
     }
 }
