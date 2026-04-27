@@ -2,7 +2,7 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Application.Contracts.Ports;
 
-public interface IUnitOfWork
+public interface IUnitOfWork: IAsyncDisposable
 {
     // TODO: should this IUnitOfWork extend IDisposable or IAsyncDisposable?
     Task Do();
