@@ -5,6 +5,10 @@
 
 # dotenv files
 .env
+*.env
+
+# Language server cache files
+*.lscache
 
 # User-specific files
 *.rsuser
