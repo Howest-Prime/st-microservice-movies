@@ -2,6 +2,7 @@ using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.Movies.Movie;
 using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
+using Howestprime.Movies.Domain.Movies.Movie.Repositories;
 using Howestprime.Movies.Application.Movies.Exceptions;
 
 namespace Howestprime.Movies.Application.Movies;
@@ -29,8 +30,9 @@ public class RegisterMovie: IUseCase<RegisterMovieInput, RegisterMovieOutput>
             MovieReleaseYear.Create(input.ReleaseYear) ,
             MovieDuration.Create(input.Duration),
             input.Actors.Select(a => Actor.Create(a)).ToList(),
-            input.AgeRating,
-            input.PosterUrl
+            AgeRating.Create((AgeRatingValue)input.AgeRating),
+            PosterUrl.Create(input.PosterUrl)
+           
         );
 
         IMovieRepository movieRepository = _uow.Repo<IMovieRepository>();
