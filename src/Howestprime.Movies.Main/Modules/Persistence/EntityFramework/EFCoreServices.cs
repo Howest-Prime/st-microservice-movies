@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Domain.Movies.Movie.Repositories;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Vendors;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Interceptors;
+using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Repositories;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
 
 namespace Howestprime.Movies.Main.Modules.Persistence.EntityFramework;
@@ -42,6 +44,10 @@ public static class EFCoreServices
                     logger
                 );
 
+                uow.RegisterRepository(
+                    sp.GetRequiredService<IMovieRepository>()
+                );
+
                 return uow;
             });
     }
@@ -57,7 +63,8 @@ public static class EFCoreServices
         this IServiceCollection services
     )
     {
-        return services;
+        return services
+            .AddScoped<IMovieRepository, EfCoreMovieRepository>();
     }
 
     private static IServiceCollection AddQueries(
