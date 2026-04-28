@@ -60,4 +60,9 @@ public sealed class EntityFrameworkUoW (
 
         logger.LogRegisteringRepository(typeof(TRepository).FullName);
     }
+
+    public async ValueTask DisposeAsync()
+    {
+        await dbContext.DisposeAsync();
+    }
 }
