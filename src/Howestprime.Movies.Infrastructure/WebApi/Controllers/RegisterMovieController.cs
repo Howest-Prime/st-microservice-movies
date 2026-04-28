@@ -1,22 +1,17 @@
-
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Howestprime.Movies.Domain.Movies.Movie.Repositories;
 using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Infrastructure.WebApi.DTOs;
+using Howestprime.Movies.Application.Contracts.Ports;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers;
 
-public class RegisterMovieController : ControllerBase
+public static class RegisterMovieController
 {
-    private readonly RegisterMovie _registerMovieUseCase;
-
-    public RegisterMovieController(RegisterMovie registerMovieUseCase)
-    {
-        _registerMovieUseCase = registerMovieUseCase;
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> RegisterMovie([FromBody] RegisterMovieDTO movie)
+    public static async Task<IResult> Invoke(
+        [FromBody] RegisterMovieDTO movie,
+        IUseCase<RegisterMovieInput, RegisterMovieOutput> registerMovieUseCase
+    )
     {  
         RegisterMovieInput newMovie = new RegisterMovieInput(
             movie.Title,
@@ -29,7 +24,7 @@ public class RegisterMovieController : ControllerBase
             movie.PosterUrl
         );
 
-        RegisterMovieOutput result = await _registerMovieUseCase.Execute(newMovie);
-        return Ok(result);
+        RegisterMovieOutput result = await registerMovieUseCase.Execute(newMovie);
+        return Results.Ok(result);
     }
 }
