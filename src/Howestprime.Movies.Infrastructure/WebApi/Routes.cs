@@ -20,8 +20,8 @@ public static class Routes
     {
         RouteGroupBuilder movieCatalog = app.MapGroup("/movie-catalog")
             .WithTags("Movie Catalog")
-            .WithOpenApi();
-        
+            .WithDescription("Endpoints for managing the movie catalog.");
+            
         movieCatalog.MapPost("/", RegisterMovieController.Invoke)
             .WithName("RegisterMovie")
             .WithDescription("Register a new movie.");
