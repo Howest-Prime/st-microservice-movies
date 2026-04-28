@@ -14,10 +14,11 @@ public static class SearchMovieByTitleAndGenres
     public static async Task<IResult> Invoke(
         [FromQuery] string? title,
         [FromQuery] string[]? genres,
+        [FromHeader(Name = "X-User-Role")] string userRole,
         IUseCase<SearchMovieCatalogInput, Optional<IReadOnlyList<MovieData>>> searchMovieCatalogUseCase
     )
     {
-        SearchMovieCatalogInput input = new SearchMovieCatalogInput(title, genres);
+        SearchMovieCatalogInput input = new SearchMovieCatalogInput(userRole, title, genres);
         Optional<IReadOnlyList<MovieData>> result = await searchMovieCatalogUseCase.Execute(input);
 
         return Results.Ok(result);

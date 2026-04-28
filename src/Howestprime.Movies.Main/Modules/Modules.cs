@@ -17,7 +17,9 @@ public static class ModuleExtensions
             .AddApplicationModule(configuration)
             .AddDomainEventModule(configuration)
             .AddEFCoreModule(configuration)
-            .AddWebApiModule(configuration);
+            .AddWebApiModule(configuration)
+            .AddAuthorizationModule(configuration);
+
     }
 
     public static async Task<WebApplication> UseModules(this WebApplication app)
