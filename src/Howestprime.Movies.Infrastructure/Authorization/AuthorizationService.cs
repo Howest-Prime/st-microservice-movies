@@ -1,5 +1,3 @@
-
-
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Infrastructure.Authorization.Configuration;
 using Microsoft.Extensions.Options;
@@ -7,20 +5,22 @@ using Microsoft.Extensions.Options;
 namespace Howestprime.Movies.Infrastructure.Authorization;
 
 public class AuthorizationService(
-    IOptions<AuthorizationOption> authorizationOptions
+    IOptions<AuthorizationOption> options
 ) : IAuthorizationService
 {
-    public Task Authorize(Role role, string useCaseName)
+    public Task Authorize(string role, string useCaseName)
     {
-        string normalizedUseCaseName = useCaseName.Trim();
+        string normalizedRole = role.Trim();
 
-        string[] allowedUseCases = authorizationOptions.Value.PermissionsByRole
-            .FirstOrDefault(rp => rp.Name.Equals(role.ToString(), StringComparison.OrdinalIgnoreCase))
-            ?.Permissions ?? [];
-
-        if (!allowedUseCases.Any(permission =>
-                permission.Equals(normalizedUseCaseName, StringComparison.OrdinalIgnoreCase)))
-            throw new UnauthorizedAccessException($"Role '{role}' does not have permission to execute use case '{useCaseName}'.");
+        IList<string>? permissions = options.Value.PermissionsByRole
+            .FirstOrDefault(r => r.Name.Equals(normalizedRole, StringComparison.OrdinalIgnoreCase))
+            ?.Permissions;
+            
+        if (permissions == null || !permissions.Contains(useCaseName, StringComparer.OrdinalIgnoreCase))
+        {
+            throw new UnauthorizedAccessException(
+                $"Role '{role}' is not allowed to execute '{useCaseName}'.");
+        }
 
         return Task.CompletedTask;
     }

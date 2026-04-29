@@ -7,9 +7,21 @@ public static class MovieDataFilter
 {
     public static Expression<Func<MovieData, bool>> ByTitleAndGenre(string? title, IList<MovieGenre>? genres)
     {
-    return movie =>
-        (string.IsNullOrWhiteSpace(title) || movie.Title.ToLower().Contains(title.ToLower())) &&
-        (genres == null || genres.Count == 0 || genres.All(g => movie.Genres.Any(genre => genre.Value.ToLower().Contains(g.Value.ToLower()))));
+        List<string> genreValues = genres == null
+                        ? new List<string>() 
+                        : genres.Select(g => g.Value.ToLower()).ToList();
+
+        string normalizedTitle = title == null
+                        ? string.Empty
+                        : title.ToLower();
+
+        return movie =>
+                (string.IsNullOrWhiteSpace(title) ||
+                    movie.Title.ToLower().Contains(normalizedTitle)) &&
+                (!genreValues.Any() ||  genreValues.All(g =>
+                                        movie.Genres.Any(genre =>
+                                            genre.Value.ToLower() == g
+        )));
     }
 
     public static Expression<Func<MovieData, bool>> ByID(Guid id)

@@ -4,7 +4,6 @@ using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 using Howestprime.Movies.Domain.Movies.Movie.Repositories;
 using Microsoft.Extensions.Logging;
-using Howestprime.Movies.Application.Movies.Exceptions;
 
 namespace Howestprime.Movies.Application.Movies;
 
@@ -21,13 +20,6 @@ public class RegisterMovie(
 
     public async Task<RegisterMovieOutput> Execute(RegisterMovieInput input)
     {
-        IMovieRepository movieRepository = uow.Repo<IMovieRepository>();
-
-        if(movieRepository == null)
-        {
-            throw new RepositoryNotFoundException(nameof(IMovieRepository));
-        }
-
         Movie movie = Movie.Create(
             EntityId.New<MovieId>(),
             MovieTitle.Create(input.Title),
@@ -40,7 +32,6 @@ public class RegisterMovie(
             PosterUrl.Create(input.PosterUrl)
         );
 
-        await movieRepository.AddAsync(movie);
         await uow.Save<IMovieRepository>(movie);
         await uow.Do();
 
