@@ -5,13 +5,13 @@ namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
  public enum AgeRatingCategory
 {
-    All ,
-    Six,
-    Nine,
-    Twelve,
-    Fourteen,
-    Sixteen,
-    Eighteen,
+    All = 0,
+    Six = 6,
+    Nine = 9,
+    Twelve = 12,
+    Fourteen = 14,
+    Sixteen = 16,
+    Eighteen = 18,
 }
 
 public sealed record AgeRating : ValueObject
