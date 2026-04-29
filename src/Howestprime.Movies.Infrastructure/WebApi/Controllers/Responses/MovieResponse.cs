@@ -7,8 +7,7 @@ public record MovieResponse(
     int Duration,
     IList<string> Genres,
     int ReleaseYear,
-    IList
-    <string> Actors,
+    IList<string> Actors,
     int AgeRating,
     string PosterUrl
 );
