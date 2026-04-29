@@ -3,7 +3,7 @@ using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
-public record MovieDescription : ValueObject
+public sealed record MovieDescription : ValueObject
 {
     private static readonly int MAX_LENGTH = 300;
     

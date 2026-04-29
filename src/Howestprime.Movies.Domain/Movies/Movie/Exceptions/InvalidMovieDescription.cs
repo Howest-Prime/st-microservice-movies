@@ -2,7 +2,7 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
-public class InvalidMovieDescriptionException : DomainException
+public sealed class InvalidMovieDescriptionException : DomainException
 {
     public InvalidMovieDescriptionException(
         string description,

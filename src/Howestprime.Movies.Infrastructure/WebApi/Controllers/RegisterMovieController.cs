@@ -6,25 +6,30 @@ using Howestprime.Movies.Application.Contracts.Ports;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers;
 
-public static class RegisterMovieController
+
+public sealed record RegisterMovieRequest(
+        [FromBody] RegisterMovieBody Body,
+        [FromServices] IUseCase<RegisterMovieInput, RegisterMovieOutput> useCase
+);
+
+public  static class RegisterMovieController
 {
     public static async Task<IResult> Invoke(
-        [FromBody] RegisterMovieDTO movie,
-        IUseCase<RegisterMovieInput, RegisterMovieOutput> registerMovieUseCase
+        [AsParameters] RegisterMovieRequest request
     )
     {  
         RegisterMovieInput newMovie = new RegisterMovieInput(
-            movie.Title,
-            movie.Description,
-            movie.Duration,
-            movie.Genres,
-            movie.ReleaseYear,
-            movie.Actors,
-            movie.AgeRating,
-            movie.PosterUrl
+            request.Body.Title,
+            request.Body.Description,
+            request.Body.Duration,
+            request.Body.Genres.ToList(),
+            request.Body.ReleaseYear,
+            request.Body.Actors.ToList(),
+            request.Body.AgeRating,
+            request.Body.PosterUrl
         );
 
-        RegisterMovieOutput result = await registerMovieUseCase.Execute(newMovie);
-        return Results.Ok(result);
+        RegisterMovieOutput result = await request.useCase.Execute(newMovie);
+        return Results.Created($"/movies/{result.Id}", result);
     }
 }

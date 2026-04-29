@@ -1,7 +1,7 @@
 using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
-public class InvalidMoviePosterUrlException : DomainException
+public sealed class InvalidMoviePosterUrlException : DomainException
 {
   public InvalidMoviePosterUrlException(
       string posterUrl

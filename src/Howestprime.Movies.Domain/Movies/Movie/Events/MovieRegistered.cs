@@ -1,7 +1,7 @@
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.Events;
-public class MovieRegistered : MovieDomainEvent
+public sealed class MovieRegistered : MovieDomainEvent
 {
     public MovieId MovieId { get; private init; }
     public MovieTitle Title { get; private init; }

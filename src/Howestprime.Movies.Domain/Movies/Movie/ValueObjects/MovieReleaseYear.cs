@@ -3,7 +3,7 @@ using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
-public record MovieReleaseYear : ValueObject
+public sealed record MovieReleaseYear : ValueObject
 {
     private static readonly int MIN_YEAR = 1888; // The year of the earliest known film
     public int Value { get; private init; }

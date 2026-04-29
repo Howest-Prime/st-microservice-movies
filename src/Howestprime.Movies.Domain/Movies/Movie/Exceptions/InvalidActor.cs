@@ -2,7 +2,7 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
-public class InvalidActorException : DomainException
+public sealed class InvalidActorException : DomainException
 {
     public InvalidActorException(
         string actorName

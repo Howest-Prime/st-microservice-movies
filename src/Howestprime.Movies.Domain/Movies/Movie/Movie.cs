@@ -4,7 +4,7 @@ using Howestprime.Movies.Domain.Movies.Movie.Events;
 
 namespace Howestprime.Movies.Domain.Movies.Movie;
 
-public class Movie : AggregateRoot<MovieId>
+public sealed class Movie : AggregateRoot<MovieId>
 {
     public MovieTitle Title { get; private set; }
     public MovieDescription Description { get; private set; }
@@ -16,8 +16,8 @@ public class Movie : AggregateRoot<MovieId>
     public IReadOnlyList<Actor> Actors => _actors.AsReadOnly();
     public IReadOnlyList<MovieGenre> Genres => _genres.AsReadOnly();
 
-    private List<Actor> _actors = [];
-    private List<MovieGenre> _genres = [];
+    private List<Actor> _actors = new List<Actor>();
+    private List<MovieGenre> _genres = new List<MovieGenre>();
 
     private Movie() : base() { }
 

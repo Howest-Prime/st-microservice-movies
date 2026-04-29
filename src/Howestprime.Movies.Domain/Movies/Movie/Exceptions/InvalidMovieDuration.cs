@@ -2,7 +2,7 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
-public class InvalidMovieDurationException : DomainException
+public sealed class InvalidMovieDurationException : DomainException
 {
     public InvalidMovieDurationException(
         int duration

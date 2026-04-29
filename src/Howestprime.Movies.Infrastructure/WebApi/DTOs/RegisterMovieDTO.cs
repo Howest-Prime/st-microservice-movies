@@ -1,7 +1,7 @@
 
 namespace Howestprime.Movies.Infrastructure.WebApi.DTOs;
 
-public record RegisterMovieDTO(
+public record RegisterMovieBody(
     string Title,
     string Description,
     int Duration,

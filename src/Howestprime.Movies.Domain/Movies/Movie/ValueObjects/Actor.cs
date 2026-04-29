@@ -3,7 +3,7 @@ using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
-public record Actor : ValueObject
+public sealed record Actor : ValueObject
 {
     public string Value { get; private init; }
 

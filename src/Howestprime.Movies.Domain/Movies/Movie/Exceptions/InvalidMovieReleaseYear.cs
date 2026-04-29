@@ -2,7 +2,7 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
-public class InvalidMovieReleaseYearException : DomainException
+public sealed class InvalidMovieReleaseYearException : DomainException
 {
     public InvalidMovieReleaseYearException(
         int year,

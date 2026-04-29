@@ -2,7 +2,7 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
-public class InvalidMovieGenreException : DomainException
+public sealed class InvalidMovieGenreException : DomainException
 {
     public InvalidMovieGenreException(
         string genre,

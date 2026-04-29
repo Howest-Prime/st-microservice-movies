@@ -14,7 +14,7 @@ namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
     Eighteen,
 }
 
-public record AgeRating : ValueObject
+public sealed record AgeRating : ValueObject
 {
     public AgeRatingCategory Value { get; private init; }
 
@@ -32,7 +32,7 @@ public record AgeRating : ValueObject
         return new AgeRating(value);
     }
 
-    public static AgeRating CreateFromInt(
+    public static AgeRating From(
         int value
     )
     {
