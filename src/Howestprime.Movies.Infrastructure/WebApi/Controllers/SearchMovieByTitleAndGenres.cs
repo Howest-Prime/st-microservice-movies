@@ -5,6 +5,7 @@ using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Howestprime.Movies.Infrastructure.WebApi.Extentions;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers;
 
@@ -22,24 +23,15 @@ public static class SearchMovieByTitleAndGenresController
     )
     {
         SearchMovieCatalogInput input = new SearchMovieCatalogInput(request.UserRole, request.Title, request.Genres);
+
         Optional<IReadOnlyList<MovieData>> result = await request.SearchMovieCatalogUseCase.Execute(input);
 
-        if (!result.HasValue || result.Value is null)
+        if (!result.HasValue)
+        {
             return Results.Ok(Enumerable.Empty<MovieResponse>());
 
-        return Results.Ok(result.Value.Select(MapToResponse));
-    }
+        }
 
-    private static MovieResponse MapToResponse(MovieData movieData) =>
-        new(
-            movieData.Id.ToString(),
-            movieData.Title,
-            movieData.Description,
-            movieData.Duration,
-            movieData.Genres.Select(g => g.Value).ToList(),
-            movieData.ReleaseYear,
-            movieData.Actors.Select(a => a.Name).ToList(),
-            movieData.AgeRating,
-            movieData.PosterUrl
-        );
+        return Results.Ok(result.Value.ToMovieResponseList());
+    }
 }

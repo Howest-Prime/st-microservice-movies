@@ -5,6 +5,7 @@ using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Howestprime.Movies.Infrastructure.WebApi.Extentions;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers;
 
@@ -28,26 +29,15 @@ public static class FindMovieByIDController
         }
 
         FindMovieByIDInput input = new FindMovieByIDInput(request.UserRole, movieId);
+        
         Optional<MovieData> result = await request.FindMovieByIDUseCase.Execute(input);
 
-        Console.WriteLine($"FindMovieByIDController: Fetched movie for ID '{movieId}': {(result.HasValue ? "Found" : "Not found")}");
         if (!result.HasValue || result.Value is null)
+        {
             return Results.NotFound();
 
-        return Results.Ok(MapToResponse(result.Value));
+        }
+        return Results.Ok(result.Value.ToMovieResponse());
     }
 
-    private static MovieResponse MapToResponse(MovieData movieData) =>
-        new(
-            movieData.Id.ToString(),
-            movieData.Title,
-            movieData.Description,
-            movieData.Duration,
-            movieData.Genres.Select(g => g.Value).ToList(),
-            movieData.ReleaseYear,
-            movieData.Actors.Select(a => a.Name).ToList(),
-            movieData.AgeRating,
-            movieData.PosterUrl
-        );
-    
 }
