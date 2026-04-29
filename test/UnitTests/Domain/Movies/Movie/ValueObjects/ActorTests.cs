@@ -44,6 +44,6 @@ public sealed class ActorTests
         Actor actor = Actor.Create(actorName);
 
         // Assert
-        Assert.Equal(expectedValue, actor.Value);
+        Assert.Equal(expectedValue, actor.Name);
     }
 }

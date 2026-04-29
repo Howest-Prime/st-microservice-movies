@@ -2,6 +2,6 @@ namespace Howestprime.Movies.Application.Contracts.Data;
 
 public sealed record ActorData
 {
-    public required string Value { get; init; }
+    public required string Name { get; init; }
 }
 

@@ -5,13 +5,13 @@ namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 public sealed record Actor : ValueObject
 {
-    public string Value { get; private init; }
+    public string Name { get; private init; }
 
     private Actor(
-        string value
+        string name
     )
     {
-        Value = value;
+        Name = name;
     }
 
     public static Actor Create(

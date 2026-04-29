@@ -16,8 +16,11 @@ public class SearchMovieCatalog(
 {
     public async Task<Optional<IReadOnlyList<MovieData>>> Execute(SearchMovieCatalogInput input)
     {
-       if (!Enum.TryParse<Role>(input.role?.Trim(), ignoreCase: true, out Role role))
+        string normalizedRole = input.role?.Trim() ?? string.Empty;
+       if (!Enum.TryParse<Role>(normalizedRole, ignoreCase: true, out Role role))
+        {
             throw new UnauthorizedAccessException($"Invalid role '{input.role}'.");
+        }
 
        await authorizationService.Authorize(role, nameof(SearchMovieCatalog));
        IList<MovieGenre>? normalizedGenres = input.Genre?.Select(g => MovieGenre.Create(g)).ToList();

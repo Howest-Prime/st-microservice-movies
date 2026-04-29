@@ -23,7 +23,7 @@ public sealed class MovieDataConfiguration : IEntityTypeConfiguration<MovieData>
         builder.OwnsMany(m => m.Actors, actorBuilder =>
         {
             actorBuilder.ToJson();
-            actorBuilder.Property(a => a.Value);
+            actorBuilder.Property(a => a.Name);
         });
 
         builder.OwnsMany(m => m.Genres, genreBuilder =>

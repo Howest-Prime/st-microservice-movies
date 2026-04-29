@@ -23,7 +23,7 @@ public sealed class MovieConfiguration : IEntityTypeConfiguration<Movie>
         builder.OwnsMany(movie => movie.Actors, actorBuilder =>
         {
             actorBuilder.ToJson();
-            actorBuilder.Property(actor => actor.Value).IsRequired();
+            actorBuilder.Property(actor => actor.Name).IsRequired();
         });
 
         builder.OwnsMany(movie => movie.Genres, genreBuilder =>
