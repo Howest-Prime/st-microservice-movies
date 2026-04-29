@@ -7,19 +7,23 @@ public record PosterUrl : ValueObject
 {
     public string Value { get; private init; }
 
-    private PosterUrl(string value)
+    private PosterUrl(
+        string value
+    )
     {
         Value = value;
     }
 
-    public static PosterUrl Create(string value)
+    public static PosterUrl Create(
+        string value
+    )
     {
-        string trimmed = value?.Trim() ?? string.Empty;
+        string trimmedUrl = value?.Trim() ?? string.Empty;
 
-        if(string.IsNullOrWhiteSpace(trimmed) || trimmed.Length == 0)
+        if(string.IsNullOrWhiteSpace(trimmedUrl))
         {
-            throw new InvalidMoviePosterUrlException(trimmed);
+            throw new InvalidMoviePosterUrlException(trimmedUrl);
         }
-        return new PosterUrl(trimmed);
+        return new PosterUrl(trimmedUrl);
     }
 }

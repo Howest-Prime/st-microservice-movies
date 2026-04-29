@@ -5,23 +5,26 @@ namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 public record MovieGenre : ValueObject
 {
-    private static readonly int MIN_LENGTH = 1;
     private static readonly int MAX_LENGTH = 50;
 
     public string Value { get; private init; }
 
-    private MovieGenre(string value)
+    private MovieGenre(
+        string value
+    )
     {
         Value = value;
     }
 
-    public static MovieGenre Create(string value)
+    public static MovieGenre Create(
+        string value
+    )
     {
         string trimmed = value?.Trim() ?? string.Empty;
 
-        if(string.IsNullOrWhiteSpace(trimmed) || trimmed.Length < MIN_LENGTH || trimmed.Length > MAX_LENGTH)
+        if(string.IsNullOrWhiteSpace(trimmed) || trimmed.Length > MAX_LENGTH)
         {
-            throw new InvalidMovieGenreException(trimmed, MIN_LENGTH, MAX_LENGTH);
+            throw new InvalidMovieGenreException(trimmed, MAX_LENGTH);
         }
 
         return new MovieGenre(trimmed);

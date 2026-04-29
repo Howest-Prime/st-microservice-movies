@@ -9,12 +9,16 @@ public record MovieReleaseYear : ValueObject
     public int Value { get; private init; }
 
 
-    private MovieReleaseYear(int value)
+    private MovieReleaseYear(
+        int value
+    )
     {
         Value = value;
     }
 
-    public static MovieReleaseYear Create(int value)
+    public static MovieReleaseYear Create(
+        int value
+    )
     {
         int currentYear = DateTime.Now.Year;
         if (value < MIN_YEAR || value > currentYear)

@@ -4,7 +4,9 @@ namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 public class InvalidActorException : DomainException
 {
-    public InvalidActorException(string actor) : base($"The actor '{actor}' is invalid. The actor must be non-empty and cannot contain only whitespace.")
+    public InvalidActorException(
+        string actorName
+    ) : base($"The actor name '{actorName}' is invalid. The actor name must be non-empty and cannot contain only whitespace.")
     {
     }
 }

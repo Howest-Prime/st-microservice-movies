@@ -4,7 +4,10 @@ namespace Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 public class InvalidMovieTitleException : DomainException
 {
-    public InvalidMovieTitleException(string title, int min, int max) : base($"The movie title '{title}' is invalid. The title must be between {min} and {max} characters.")
+    public InvalidMovieTitleException(
+        string title,
+        int max
+    ) : base($"The movie title '{title}' is invalid. The title must be between 1 and {max} characters.")
     {
     }
 }

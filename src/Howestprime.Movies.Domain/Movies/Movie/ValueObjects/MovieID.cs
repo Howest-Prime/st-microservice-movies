@@ -6,7 +6,9 @@ public readonly struct MovieId : IEntityId
 {
     public Guid Value { get; }
 
-    public MovieId(Guid value)
+    public MovieId(
+        Guid value
+    )
     {
         Value = value;
     }

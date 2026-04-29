@@ -7,12 +7,16 @@ public record MovieDuration : ValueObject
 {
     public int Value { get; private init; }
 
-    private MovieDuration(int value)
+    private MovieDuration(
+        int value
+    )
     {
         Value = value;
     }
 
-    public static MovieDuration  Create(int value)
+    public static MovieDuration Create(
+        int value
+    )
     {
         if (value <= 0)
         {

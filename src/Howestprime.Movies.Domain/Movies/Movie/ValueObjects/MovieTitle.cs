@@ -6,23 +6,26 @@ namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 public record MovieTitle : ValueObject
 {
 
-    private static readonly int MIN_LENGTH = 1;
     private static readonly int MAX_LENGTH = 50;
 
     public string Value { get; private init; }
 
-    private MovieTitle(string value)
+    private MovieTitle(
+        string value
+    )
     {
         Value = value;
     }
 
-    public static MovieTitle Create(string value)
+    public static MovieTitle Create(
+        string value
+    )
     {
         string trimmedValue = value?.Trim() ?? string.Empty;
 
-        if(string.IsNullOrWhiteSpace(trimmedValue) || trimmedValue.Length > MAX_LENGTH || trimmedValue.Length < MIN_LENGTH)
+        if(string.IsNullOrWhiteSpace(trimmedValue) || trimmedValue.Length > MAX_LENGTH)
         {
-            throw new InvalidMovieTitleException(trimmedValue, MIN_LENGTH, MAX_LENGTH);
+            throw new InvalidMovieTitleException(trimmedValue, MAX_LENGTH);
         }
         return new MovieTitle(trimmedValue);
     }

@@ -7,20 +7,24 @@ public record Actor : ValueObject
 {
     public string Value { get; private init; }
 
-    private Actor(string value)
+    private Actor(
+        string value
+    )
     {
         Value = value;
     }
 
-    public static Actor Create(string value)
+    public static Actor Create(
+        string name
+    )
     {
-        string trimmed = value?.Trim() ?? string.Empty;
+        string trimmedName = name?.Trim() ?? string.Empty;
 
-        if(string.IsNullOrWhiteSpace(trimmed) || trimmed.Length == 0)
+        if(string.IsNullOrWhiteSpace(trimmedName))
         {
-            throw new InvalidActorException(trimmed);
+            throw new InvalidActorException(trimmedName);
         }
 
-        return new Actor(trimmed);
+        return new Actor(trimmedName);
     }
 }

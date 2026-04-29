@@ -5,21 +5,24 @@ namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 public record MovieDescription : ValueObject
 {
-    private static readonly int MIN_LENGTH = 1;
     private static readonly int MAX_LENGTH = 300;
     
     public string Value { get; private init; }
 
-    private MovieDescription(string value)
+    private MovieDescription(
+        string value
+    )
     {
         Value = value;
     }
 
-    public static MovieDescription Create(string value)
+    public static MovieDescription Create(
+        string value
+    )
     {
         if(string.IsNullOrWhiteSpace(value) || value.Length > MAX_LENGTH)
         {
-            throw new InvalidMovieDescriptionException(value, MIN_LENGTH, MAX_LENGTH);
+            throw new InvalidMovieDescriptionException(value, MAX_LENGTH);
         }
         
         return new MovieDescription(value);
