@@ -8,6 +8,8 @@ public abstract class QueryDbContext : DbContext
 {
 
     public DbSet<MovieData> Movies { get; set; }
+    public DbSet<MovieEventData> MovieEvents { get; set; }
+    public DbSet<RoomData> Rooms { get; set; }
     protected QueryDbContext()
     {
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
@@ -16,6 +18,8 @@ public abstract class QueryDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new MovieDataConfiguration());
+        modelBuilder.ApplyConfiguration(new MovieEventDataConfiguration());
+        modelBuilder.ApplyConfiguration(new RoomDataConfiguration());
         base.OnModelCreating(modelBuilder);
     }
 }

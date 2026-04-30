@@ -15,7 +15,8 @@ public sealed class MoviesByTitleAndGenres(QueryDbContext context) : ISearchMovi
     {
         IQueryable<MovieData> query = context.Movies
             .Include(m => m.Genres)
-            .Include(m => m.Actors);
+            .Include(m => m.Actors)
+            .AsNoTracking();
 
         IQueryable<MovieData> filteredQuery = query
             .Where(filter ?? (m => true));

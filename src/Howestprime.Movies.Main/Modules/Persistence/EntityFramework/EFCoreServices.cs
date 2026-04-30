@@ -10,6 +10,7 @@ using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Repositories
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
 using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.Movies.Room;
+using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.MovieEvents;
 
 namespace Howestprime.Movies.Main.Modules.Persistence.EntityFramework;
 
@@ -85,7 +86,8 @@ public static class EFCoreServices
     )
     {
         return services
-            .AddScoped<ISearchMovieCatalogQuery, MoviesByTitleAndGenres>();
+            .AddScoped<ISearchMovieCatalogQuery, MoviesByTitleAndGenres>()
+            .AddScoped<ISearchMovieEventsInTimeRangeQuery, MoviesInTimeRange>();
     }
     
     public static WebApplication ApplyMigrations(this WebApplication app)

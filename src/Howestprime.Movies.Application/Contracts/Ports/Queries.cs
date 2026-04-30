@@ -10,3 +10,10 @@ public interface ISearchMovieCatalogQuery
         Expression<Func<MovieData, bool>>? filter = null
     );
 }
+
+public interface ISearchMovieEventsInTimeRangeQuery
+{
+    public Task<IReadOnlyList<MovieEventData>> Fetch(
+        Expression<Func<MovieEventData, bool>>? filter = null
+    );
+}
