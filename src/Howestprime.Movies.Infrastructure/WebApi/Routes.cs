@@ -51,6 +51,10 @@ public static class Routes
             .WithName("ScheduleMovieEvent")
             .WithDescription("Schedule a new movie event.");
 
+        movieEvents.MapGet("/" , FindAllMovieEventsByMonthController.Invoke)
+            .WithName("MovieEvent By Month")
+            .WithDescription("Get list of movie events by year and month");
+
         return movieEvents;
     }
 
