@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Howestprime.Movies.Infrastructure.WebApi.Extentions;
 
-namespace Howestprime.Movies.Infrastructure.WebApi.Controllers;
+namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
 public sealed record SearchMovieByTitleAndGenresRequest(
     [FromHeader(Name = "X-User-Role")] string UserRole,

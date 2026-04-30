@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Howestprime.Movies.Domain.Movies.Movie;
 using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
@@ -18,7 +17,7 @@ public sealed class MovieEventConfiguration : IEntityTypeConfiguration<MovieEven
         builder.Property(movieEvent => movieEvent.ShowTime)
             .HasConversion(
                 v => v.Value,
-                v => MovieEventShowTime.From(v)
+                v => MovieEventShowTime.Create(v)
             )
     .IsRequired();
         builder.Property(movieEvent => movieEvent.MovieId).IsRequired();

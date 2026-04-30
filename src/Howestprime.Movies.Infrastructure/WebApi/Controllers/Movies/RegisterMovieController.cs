@@ -4,7 +4,7 @@ using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Infrastructure.WebApi.DTOs;
 using Howestprime.Movies.Application.Contracts.Ports;
 
-namespace Howestprime.Movies.Infrastructure.WebApi.Controllers;
+namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
 
 public sealed record RegisterMovieRequest(
