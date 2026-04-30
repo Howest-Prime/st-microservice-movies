@@ -9,28 +9,4 @@ public class EfCoreMovieRepository : EfCoreGenericRepository<Movie, MovieId>, IM
 {
     public EfCoreMovieRepository(DomainDbContext context) : base(context) { }
 
-    public async Task AddAsync(Movie movie)
-    {
-        await _context.Movies.AddAsync(movie);
-    }
-
-    public async Task<Movie?> ByIdAsync(MovieId id)
-    {
-        return await _context.Movies.FindAsync(id);
-    }
-
-    public async Task UpdateAsync(Movie movie)
-    {
-        _context.Movies.Update(movie);
-    }
-
-    public async Task DeleteAsync(MovieId id)
-    {
-        Movie? movie = await _context.Movies.FindAsync(id);
-        if (movie is not null)
-        {
-            _context.Movies.Remove(movie);
-        }
-            
-    }
 }
