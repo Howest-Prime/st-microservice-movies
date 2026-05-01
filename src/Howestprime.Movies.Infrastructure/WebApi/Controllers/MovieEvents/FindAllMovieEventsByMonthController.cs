@@ -13,8 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
 
 public sealed record GetMovieEventsByMonthRequest(
-    [FromQuery(Name = "year")] int Year,
-    [FromQuery(Name = "month")] int Month,
+    [FromQuery] int Year,
+    [FromQuery] int Month,
     [FromServices] IUseCase<SearchMovieEventsInTimeRangeInput, IReadOnlyList<MovieEventData>> UseCase
 );
 
