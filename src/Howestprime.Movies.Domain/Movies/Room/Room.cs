@@ -24,14 +24,15 @@ public sealed class Room: AggregateRoot<RoomID>
         int capacity
     )
     {
-        Room newRoom = new Room(id, name , capacity);
+        Room newRoom = new Room(id, name, capacity);
         newRoom.ValidateState();
         return newRoom;
     }
 
     public override void ValidateState()
     {
-        
+        Asserts.EnsureNotEmpty(Name);
+        Asserts.EnsureGreaterThan(0, Capacity);
     }
 }
 
