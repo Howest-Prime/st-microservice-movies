@@ -1,6 +1,6 @@
 namespace Howestprime.Movies.Infrastructure.Authorization.Configuration;
 
-public class AuthorizationOption
+public sealed class AuthorizationOption
 {
-    public IList<RolePermission> PermissionsByRole { get; set; } = [];
+    public IList<RolePermission> PermissionsByRole { get; init; } = [];
 }

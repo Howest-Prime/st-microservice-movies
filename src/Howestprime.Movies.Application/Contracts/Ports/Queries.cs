@@ -15,7 +15,7 @@ public interface ISearchMovieCatalogQuery
 
 public interface ISearchMovieEventsInTimeRangeQuery
 {
-    public Task<IReadOnlyList<MovieEventData>> Fetch(
+    public Task<Optional<IReadOnlyList<MovieEventData>>> Fetch(
         Expression<Func<MovieEventData, bool>>? filter = null
     );
 }

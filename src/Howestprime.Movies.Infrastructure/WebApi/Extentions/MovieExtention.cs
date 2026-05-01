@@ -1,4 +1,4 @@
-using Howestprime.Movies.Application.Contracts.Data;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 namespace Howestprime.Movies.Infrastructure.WebApi.Extentions;
 

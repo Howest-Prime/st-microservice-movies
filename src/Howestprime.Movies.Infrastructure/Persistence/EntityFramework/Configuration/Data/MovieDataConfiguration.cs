@@ -1,4 +1,4 @@
-using Howestprime.Movies.Application.Contracts.Data;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

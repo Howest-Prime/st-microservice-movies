@@ -1,5 +1,5 @@
 using Aornis;
-using Howestprime.Movies.Application.Contracts.Data;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
@@ -26,12 +26,10 @@ public static class SearchMovieByTitleAndGenresController
 
         Optional<IReadOnlyList<MovieData>> result = await request.SearchMovieCatalogUseCase.Execute(input);
 
-        if (!result.HasValue)
-        {
-            return Results.Ok(Enumerable.Empty<MovieResponse>());
-
-        }
-
-        return Results.Ok(result.Value.ToMovieResponseList());
+        return Results.Ok(
+            result.HasValue
+                ? result.Value.ToMovieResponseList()
+                : Enumerable.Empty<MovieResponse>()
+    );
     }
 }

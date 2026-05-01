@@ -11,6 +11,7 @@ using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
 using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.Movies.Room;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.MovieEvents;
+using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.Movies;
 
 namespace Howestprime.Movies.Main.Modules.Persistence.EntityFramework;
 

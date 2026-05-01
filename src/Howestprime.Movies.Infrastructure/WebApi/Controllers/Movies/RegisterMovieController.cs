@@ -1,15 +1,24 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Howestprime.Movies.Application.Movies;
-using Howestprime.Movies.Infrastructure.WebApi.DTOs;
 using Howestprime.Movies.Application.Contracts.Ports;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
+public record RegisterMovieBody(
+    string Title,
+    string Description,
+    int Duration,
+    string[] Genres,
+    int ReleaseYear,
+    string[] Actors,
+    int AgeRating,
+    string PosterUrl
+);
 
 public sealed record RegisterMovieRequest(
         [FromBody] RegisterMovieBody Body,
-        [FromServices] IUseCase<RegisterMovieInput, RegisterMovieOutput> useCase
+        [FromServices] IUseCase<RegisterMovieInput, RegisterMovieOutput> UseCase
 );
 
 public  static class RegisterMovieController
@@ -29,7 +38,7 @@ public  static class RegisterMovieController
             request.Body.PosterUrl
         );
 
-        RegisterMovieOutput result = await request.useCase.Execute(newMovie);
+        RegisterMovieOutput result = await request.UseCase.Execute(newMovie);
         
         return Results.Created($"/movies/{result.Id}", result);
     }

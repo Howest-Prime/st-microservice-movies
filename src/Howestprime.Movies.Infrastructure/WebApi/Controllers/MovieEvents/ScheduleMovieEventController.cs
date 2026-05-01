@@ -15,21 +15,20 @@ public sealed record ScheduleMovieEventBody(
 
 public sealed record ScheduleMovieEventRequest(
     [FromBody] ScheduleMovieEventBody Body,
-    [FromServices] IUseCase<ScheduleMovieEventInput, ScheduleMovieEventOutput> useCase
+    [FromServices] IUseCase<ScheduleMovieEventInput, ScheduleMovieEventOutput> UseCase
 );
 public static class ScheduleMovieEventController
 {
     public static async Task<IResult> Invoke(
-        [FromBody] ScheduleMovieEventBody body,
-        [FromServices] IUseCase<ScheduleMovieEventInput, ScheduleMovieEventOutput> useCase
+        [AsParameters] ScheduleMovieEventRequest request
     )
     {
         ScheduleMovieEventInput input = new ScheduleMovieEventInput(
-            body.MovieId,
-            body.RoomId,
-            body.ShowTime
+            request.Body.MovieId,
+            request.Body.RoomId,
+            request.Body.ShowTime
         );
-        ScheduleMovieEventOutput output = await useCase.Execute(input);
+        ScheduleMovieEventOutput output = await request.UseCase.Execute(input);
         return Results.Created($"/movieevents/{output.MovieEventID}", output);
     }
 }

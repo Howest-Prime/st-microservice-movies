@@ -1,11 +1,11 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
-using Howestprime.Movies.Application.Contracts.Data;
 using Aornis;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
 
-namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries;
+namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.Movies;
 
 public sealed class MoviesByTitleAndGenres(QueryDbContext context) : ISearchMovieCatalogQuery
 {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace Howestprime.Movies.Infrastructure.Authorization;
 
-public class AuthorizationService(
+public sealed class AuthorizationService(
     IOptions<AuthorizationOption> options
 ) : IAuthorizationService
 {
@@ -19,7 +19,7 @@ public class AuthorizationService(
         if (permissions == null || !permissions.Contains(useCaseName, StringComparer.OrdinalIgnoreCase))
         {
             throw new UnauthorizedAccessException(
-                $"Role '{role}' is not allowed to execute '{useCaseName}'.");
+                $"Role '{role}' is not allowed to execute this functionality.");
         }
 
         return Task.CompletedTask;

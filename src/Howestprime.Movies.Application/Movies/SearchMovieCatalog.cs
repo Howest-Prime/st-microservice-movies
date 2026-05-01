@@ -3,6 +3,7 @@ using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 using Aornis;
 using Howestprime.Movies.Application.Contracts.Data.Filters;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
 
 
 namespace Howestprime.Movies.Application.Movies;

@@ -1,4 +1,4 @@
-using Howestprime.Movies.Application.Contracts.Data;
+using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 namespace Howestprime.Movies.Infrastructure.WebApi.Extentions;
 
@@ -7,8 +7,8 @@ public static class HowestPrimeScheduleExtention
     public static HowestPrimeScheduleResponse ToHowestPrimeScheduleResponse(this MovieEventData movieEventData)
     {
         return new HowestPrimeScheduleResponse(
-           new List<Guid> { movieEventData.Id },
-           new List<MovieEventData>()
+            new List<Guid> { movieEventData.Movie.Id },
+            new List<MovieEventData> { movieEventData }
         );
     }
 

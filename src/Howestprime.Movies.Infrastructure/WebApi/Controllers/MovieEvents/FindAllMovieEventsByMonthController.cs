@@ -1,13 +1,10 @@
-
-
-using System.Globalization;
-using Howestprime.Movies.Application.Contracts.Data;
+using Aornis;
+using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 using Howestprime.Movies.Infrastructure.WebApi.Extentions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
@@ -15,23 +12,24 @@ namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
 public sealed record GetMovieEventsByMonthRequest(
     [FromQuery] int Year,
     [FromQuery] int Month,
-    [FromServices] IUseCase<SearchMovieEventsInTimeRangeInput, IReadOnlyList<MovieEventData>> UseCase
+    [FromServices] IUseCase<SearchMovieEventsInTimeRangeInput, Optional<IReadOnlyList<MovieEventData>>> UseCase
 );
-
-
 
 public static class FindAllMovieEventsByMonthController
 {
     public static async Task<IResult> Invoke( [AsParameters] GetMovieEventsByMonthRequest request)
     {
-        
         (DateTime startOfMonth, DateTime endOfMonth) = GetMonthRange(request.Year, request.Month);
 
-        IReadOnlyList<MovieEventData> movieEvents = await request.UseCase.Execute(
+        Optional<IReadOnlyList<MovieEventData>> movieEvents = await request.UseCase.Execute(
             new SearchMovieEventsInTimeRangeInput(startOfMonth, endOfMonth)
         );
 
-        return Results.Ok(movieEvents.ToHowestPrimeScheduleResponse());
+        return Results.Ok(
+            movieEvents.HasValue
+                ? movieEvents.Value.ToHowestPrimeScheduleResponse()
+                : Enumerable.Empty<MovieResponse>()
+        );
     }
 
     private static (DateTime Start, DateTime End) GetMonthRange(int year, int month)

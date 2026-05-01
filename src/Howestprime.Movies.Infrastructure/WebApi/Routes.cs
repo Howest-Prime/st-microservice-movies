@@ -23,18 +23,18 @@ public static class Routes
     private static RouteGroupBuilder MapMovieRoutes(this IEndpointRouteBuilder app)
     {
         RouteGroupBuilder movieCatalog = app.MapGroup("/movie-catalog")
-            .WithTags("Movie Catalog")
+            .WithTags("Movie, Movies and Movie Catalog")
             .WithDescription("Endpoints for managing the movie catalog.");
             
         movieCatalog.MapPost("/", RegisterMovieController.Invoke)
             .WithName("RegisterMovie")
-            .WithDescription("Register a new movie.");
+            .WithDescription("Register a new movie in the catalog.");
 
         movieCatalog.MapGet("/", SearchMovieByTitleAndGenresController.Invoke)
             .WithName("SearchMovieByTitleAndGenres")
-            .WithDescription("Search movies by title and genres.");
+            .WithDescription("Search movies by title and/or genres.");
 
-        movieCatalog.MapGet("/{id}", FindMovieByIDController.Invoke)
+        movieCatalog.MapGet("/{movieId}", FindMovieByIDController.Invoke)
             .WithName("FindMovieByID")
             .WithDescription("Find a movie by its ID.");
 

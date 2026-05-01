@@ -1,8 +1,8 @@
 namespace Howestprime.Movies.Infrastructure.Authorization.Configuration;
 
-public class RolePermission 
+public sealed class RolePermission 
 {
-    public string Name { get; set; } = string.Empty;
-    public IList<string> Permissions { get; set; } = new List<string>();
+    public string Name { get; init; } = string.Empty;
+    public IList<string> Permissions { get; init; } = new List<string>();
 
 }

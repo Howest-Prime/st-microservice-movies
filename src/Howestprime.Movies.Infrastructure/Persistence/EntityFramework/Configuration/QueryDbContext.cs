@@ -1,4 +1,6 @@
-using Howestprime.Movies.Application.Contracts.Data;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
+using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
+using Howestprime.Movies.Application.Contracts.Data.Room;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Data;
 using Microsoft.EntityFrameworkCore;
 
