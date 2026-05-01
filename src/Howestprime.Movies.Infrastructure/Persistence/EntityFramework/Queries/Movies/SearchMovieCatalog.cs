@@ -7,7 +7,7 @@ using Howestprime.Movies.Application.Contracts.Data.Movies;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.Movies;
 
-public sealed class MoviesByTitleAndGenres(QueryDbContext context) : ISearchMovieCatalogQuery
+public sealed class SearchMovieCatalog(QueryDbContext context) : ISearchMovieCatalogQuery
 {
     public async Task<Optional<IReadOnlyList<MovieData>>> Fetch(
         Expression<Func<MovieData, bool>>? filter = null
