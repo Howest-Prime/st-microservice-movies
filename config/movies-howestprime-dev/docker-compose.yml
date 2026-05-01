@@ -28,8 +28,11 @@ volumes:
     name: movies-db-data
 
 networks:
-    movies-howestprime-dev:
-      name: movies-howestprime-dev
+  movies-howestprime-dev:
+    name: movies-howestprime-dev
+    ipam:
+      config:
+        - subnet: 10.22.0.0/16
 
 
       
