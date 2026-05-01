@@ -3,14 +3,13 @@ using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.MovieEvent.ValueObject;
 using Howestprime.Movies.Domain.Movies.Movie;
 using Howestprime.Movies.Domain.Movies.Movie.Repositories;
-using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 using Howestprime.Movies.Domain.Movies.Room;
 using Howestprime.Movies.Domain.Movies.Room.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Shared.Exceptions;
-using Howestprime.Movies.Application.MovieEvents.Exceptions;
 using Microsoft.Extensions.Logging;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
+using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace Howestprime.Movies.Application.MovieEvents;
 
@@ -31,21 +30,27 @@ public sealed class ScheduleMovieEvent(
 {
     public async Task<ScheduleMovieEventOutput> Execute(ScheduleMovieEventInput input)
     {
-       MovieId movieId = EntityId.New<MovieId>(input.MovieID);
-       Movie movie = (await uow.Repo<IMovieRepository>().ById(movieId))
-                        .OrElseThrow(() => new NotFoundException($"Movie with id {input.MovieID} not found."));
-
-       RoomID roomId = EntityId.New<RoomID>(input.RoomID);
-       Room room = (await uow.Repo<IRoomRepository>().ById(roomId))
-                        .OrElseThrow(() => new NotFoundException($"Room with id {input.RoomID} not found."));
+        MovieId movieId = EntityId.New<MovieId>(input.MovieID);
+        RoomID roomId = EntityId.New<RoomID>(input.RoomID);
 
         MovieEventShowTime normalizedShowTime = MovieEventShowTime.Create(input.ShowTime);
-        bool movieAlreadyScheduled = await uow.Repo<IMovieEventRepository>().ByIdAndShowTime(movieId, normalizedShowTime);
+        MovieEvent? existingMovieEvent = await uow.Repo<IMovieEventRepository>().ByRoomIdAndShowTime(roomId.Value, normalizedShowTime);
         
-        if(movieAlreadyScheduled)
+        if(existingMovieEvent != null)
         {
-            throw new EventAlreadyExists(input.MovieID, input.ShowTime);
+            existingMovieEvent.UpdateMovie(movieId.Value);
+
+            await uow.Do();
+
+            logger.LogInformation("Updated existing movie event with id {MovieEventID} to movie {MovieID} in room {RoomID} at {ShowTime}.", existingMovieEvent.Id, existingMovieEvent.MovieId, existingMovieEvent.RoomId, existingMovieEvent.ShowTime);
+            return new ScheduleMovieEventOutput(existingMovieEvent.Id.Value);
         }
+    
+        Movie movie = (await uow.Repo<IMovieRepository>().ById(movieId))
+                        .OrElseThrow(() => new NotFoundException($"Movie with id {input.MovieID} not found."));
+
+        Room room = (await uow.Repo<IRoomRepository>().ById(roomId))
+                        .OrElseThrow(() => new NotFoundException($"Room with id {input.RoomID} not found."));
 
         MovieEvent newMovieEvent = MovieEvent.Create(
             EntityId.New<MovieEventID>(),

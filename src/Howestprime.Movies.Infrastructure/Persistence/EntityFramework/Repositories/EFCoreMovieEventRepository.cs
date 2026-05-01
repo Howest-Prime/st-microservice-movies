@@ -16,10 +16,10 @@ public class EFCoreMovieEventRepository : EfCoreGenericRepository<MovieEvent, Mo
     }
 
 
-   public async Task<bool> ByIdAndShowTime(MovieId movieId, MovieEventShowTime showTime)
+   public async Task<MovieEvent?> ByRoomIdAndShowTime(Guid roomId, MovieEventShowTime showTime)
     {
         return await _context.MovieEvents
-            .AnyAsync(me => me.MovieId == movieId.Value && 
+            .FirstOrDefaultAsync(me => me.RoomId == roomId && 
                         me.ShowTime == showTime);
     }   
 }

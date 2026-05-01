@@ -1,5 +1,6 @@
 using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.MovieEvent.ValueObject;
+using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 
@@ -95,5 +96,13 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
         }
     }
 
-   
+    public void UpdateMovie(object value)
+    {
+        if(value is not Guid movieId)
+        {
+            throw new InvalidMovieUpdateException();
+        }
+
+        MovieId = movieId;
+    }
 }
