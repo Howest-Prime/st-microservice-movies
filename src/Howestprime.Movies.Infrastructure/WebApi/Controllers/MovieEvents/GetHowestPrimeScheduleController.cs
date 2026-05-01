@@ -29,8 +29,8 @@ public static class GetHowestPrimeScheduleController
 
         return Results.Ok(
             movieEvents.HasValue
-                ? movieEvents.Value.ToHowestPrimeScheduleResponse()
-                : Enumerable.Empty<MovieResponse>()
+                ? movieEvents.Value.ToHowestPrimeScheduleResponseList()
+                : Enumerable.Empty<HowestPrimeScheduleResponse>()
         );
     }
 }

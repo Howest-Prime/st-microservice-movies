@@ -29,6 +29,6 @@ public  static class BookAMovieEventController
 
         BookMovieEventOutput output = await request.UseCase.Execute(input);
         
-        return Results.Created($"/bookings/{output.BookingId}", new { BookingId = output.BookingId });
+        return Results.Created($"/bookings/{output.BookingId}", output.BookingId);
     }
 }

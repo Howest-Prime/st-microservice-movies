@@ -27,8 +27,8 @@ public static class FindAllMovieEventsByMonthController
 
         return Results.Ok(
             movieEvents.HasValue
-                ? movieEvents.Value.ToHowestPrimeScheduleResponse()
-                : Enumerable.Empty<MovieResponse>()
+                ? movieEvents.Value.ToMovieEventResponseList()
+                : Enumerable.Empty<MovieEventResponse>()
         );
     }
 
