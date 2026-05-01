@@ -18,19 +18,25 @@ public sealed class MovieEventConfiguration : IEntityTypeConfiguration<MovieEven
             .HasConversion(
                 v => v.Value,
                 v => MovieEventShowTime.Create(v)
-            )
-    .IsRequired();
+            ).IsRequired();
         builder.Property(movieEvent => movieEvent.MovieId).IsRequired();
         builder.Property(movieEvent => movieEvent.RoomId).IsRequired();
         builder.Property(movieEvent => movieEvent.Capacity).IsRequired();
-        builder.Property(movieEvent => movieEvent.Visitors).IsRequired();
         
          builder.OwnsMany(movie => movie.Bookings, actorBuilder =>
         {
             actorBuilder.ToJson();
+
             actorBuilder.Property(booking => booking.Id).IsRequired();
-            actorBuilder.Property(booking => booking.BookingStatus).IsRequired();
-            actorBuilder.Property(booking => booking.PaymentStatus).IsRequired();
+
+            actorBuilder.Property(booking => booking.BookingStatus)
+                    .HasConversion<string>()
+                    .IsRequired();
+
+            actorBuilder.Property(booking => booking.PaymentStatus)
+                    .HasConversion<string>()
+                    .IsRequired();
+
             actorBuilder.Property(booking => booking.StandardVisitors).IsRequired();
             actorBuilder.Property(booking => booking.DiscountVisitors).IsRequired();
             actorBuilder.Property(booking => booking.SeatNumbers).IsRequired();
