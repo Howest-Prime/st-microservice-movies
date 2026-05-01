@@ -25,14 +25,14 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
         Guid movieId,
         Guid roomId,
         MovieEventShowTime showTime,
-        Capacity? capacity 
+        Capacity capacity 
        
     ) : base(id)
     {
         MovieId = movieId;
         RoomId = roomId;
         ShowTime = showTime;
-        Capacity = capacity ?? Capacity.Create(0);
+        Capacity = capacity;
     }
 
     public static MovieEvent Create(
@@ -40,7 +40,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
         Guid movieId,
         Guid roomId,
         MovieEventShowTime showTime,
-        Capacity? capacity = null
+        Capacity capacity
     )
     {
         MovieEvent newMovieEvent = new MovieEvent(id, movieId, roomId, showTime, capacity);

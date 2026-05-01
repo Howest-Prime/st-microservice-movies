@@ -39,8 +39,6 @@ public sealed class ScheduleMovieEvent(
        Room room = (await uow.Repo<IRoomRepository>().ById(roomId))
                         .OrElseThrow(() => new NotFoundException($"Room with id {input.RoomID} not found."));
 
-    
-
         MovieEventShowTime normalizedShowTime = MovieEventShowTime.Create(input.ShowTime);
         bool movieAlreadyScheduled = await uow.Repo<IMovieEventRepository>().ByIdAndShowTime(movieId, normalizedShowTime);
         
@@ -53,7 +51,8 @@ public sealed class ScheduleMovieEvent(
             EntityId.New<MovieEventID>(),
             movieId.Value,
             roomId.Value,
-            normalizedShowTime
+            normalizedShowTime,
+            Capacity.Create(room.Capacity)
         );
 
         await uow.Save<IMovieEventRepository>(newMovieEvent);

@@ -1,3 +1,4 @@
+using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Shared;
 namespace Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
@@ -7,7 +8,17 @@ public sealed record Capacity(int Value) : ValueObject
         int value
     )
     {
-        return new Capacity(value);
+        Capacity newCapacity = new Capacity(value);
+        newCapacity.Validate();
+        return newCapacity;
+    }
+
+    private void Validate()
+    {
+        if (Value <= 0)
+        {
+            throw new InvalidCapacityException();
+        }
     }
 
 
