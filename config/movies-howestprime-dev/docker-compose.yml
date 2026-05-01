@@ -18,8 +18,8 @@ services:
     container_name: messagebroker.howestprime-dev
     restart : unless-stopped
     ports:
-    - "4000:5672"
-    - "4001:15672"
+    - "40000:5672"
+    - "40001:15672"
     networks:
      - movies-howestprime-dev
 
