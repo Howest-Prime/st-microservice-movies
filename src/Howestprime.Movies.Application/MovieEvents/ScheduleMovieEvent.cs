@@ -1,6 +1,3 @@
-
-
-using Aornis;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.MovieEvent.ValueObject;
@@ -28,41 +25,41 @@ public sealed record ScheduleMovieEventOutput(
 );
 
 public sealed class ScheduleMovieEvent(
-    IUnitOfWork UoW,
-    ILogger<ScheduleMovieEvent> Logger
+    IUnitOfWork uow,
+    ILogger<ScheduleMovieEvent> logger
 ) : IUseCase<ScheduleMovieEventInput, ScheduleMovieEventOutput>
 {
     public async Task<ScheduleMovieEventOutput> Execute(ScheduleMovieEventInput input)
     {
        MovieId movieId = EntityId.New<MovieId>(input.MovieID);
-       Movie? movie = (await UoW.Repo<IMovieRepository>().ById(movieId))
+       Movie movie = (await uow.Repo<IMovieRepository>().ById(movieId))
                         .OrElseThrow(() => new NotFoundException($"Movie with id {input.MovieID} not found."));
 
        RoomID roomId = EntityId.New<RoomID>(input.RoomID);
-       Room? room = (await UoW.Repo<IRoomRepository>().ById(roomId))
+       Room room = (await uow.Repo<IRoomRepository>().ById(roomId))
                         .OrElseThrow(() => new NotFoundException($"Room with id {input.RoomID} not found."));
 
     
 
         MovieEventShowTime normalizedShowTime = MovieEventShowTime.Create(input.ShowTime);
-        bool movieAlreadyScheduled = await UoW.Repo<IMovieEventRepository>().ByIdAndShowTime(movieId, normalizedShowTime);
+        bool movieAlreadyScheduled = await uow.Repo<IMovieEventRepository>().ByIdAndShowTime(movieId, normalizedShowTime);
         
         if(movieAlreadyScheduled)
         {
             throw new EventAlreadyExists(input.MovieID, input.ShowTime);
         }
 
-            MovieEvent newMovieEvent = MovieEvent.Create(
+        MovieEvent newMovieEvent = MovieEvent.Create(
             EntityId.New<MovieEventID>(),
             movieId.Value,
             roomId.Value,
             normalizedShowTime
         );
 
-        await UoW.Save<IMovieEventRepository>(newMovieEvent);
-        await UoW.Do();
+        await uow.Save<IMovieEventRepository>(newMovieEvent);
+        await uow.Do();
         
-        Logger.LogInformation("Scheduled movie event with id {MovieEventID} for movie {MovieID} in room {RoomID} at {ShowTime}.", newMovieEvent.Id, newMovieEvent.MovieId, newMovieEvent.RoomId, newMovieEvent.ShowTime);
+        logger.LogInformation("Scheduled movie event with id {MovieEventID} for movie {MovieID} in room {RoomID} at {ShowTime}.", newMovieEvent.Id, newMovieEvent.MovieId, newMovieEvent.RoomId, newMovieEvent.ShowTime);
         return new ScheduleMovieEventOutput(newMovieEvent.Id.Value);
     }
 

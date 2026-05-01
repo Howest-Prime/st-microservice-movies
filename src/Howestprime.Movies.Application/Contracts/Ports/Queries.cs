@@ -1,5 +1,7 @@
 using Aornis;
 using Howestprime.Movies.Application.Contracts.Data;
+using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
 using System.Linq.Expressions;
 
 namespace Howestprime.Movies.Application.Contracts.Ports;

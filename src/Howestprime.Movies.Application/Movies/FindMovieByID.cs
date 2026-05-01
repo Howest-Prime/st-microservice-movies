@@ -1,8 +1,6 @@
-
-
 using Aornis;
-using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Application.Contracts.Data.Filters;
+using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies.Exceptions;
 
@@ -19,13 +17,10 @@ public sealed class FindMovieByID(
     {
         await authorizationService.Authorize(input.Role, nameof(FindMovieByID));
 
-        Optional<IReadOnlyList<MovieData>> movies = await moviesQuery.Fetch(MovieDataFilter.ByID(input.MovieID));
+        IReadOnlyList<MovieData> movies = 
+                    (await moviesQuery.Fetch(MovieDataFilter.ByID(input.MovieID)))
+                    .OrElseThrow(() => new MovieNotFoundException(input.MovieID) );
 
-        if(movies.Value.Count < 1)
-        {
-            throw new MovieNotFoundException(input.MovieID);
-        }
-        
-        return movies.Value.FirstOrDefault() ;
+        return movies.FirstOrDefault() ;
     }
 }

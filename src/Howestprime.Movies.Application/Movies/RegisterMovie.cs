@@ -10,9 +10,9 @@ namespace Howestprime.Movies.Application.Movies;
 public record RegisterMovieInput(string Title, string Description, int Duration, List<string> Genres,
     int ReleaseYear, List<string> Actors, int AgeRating, string PosterUrl);
 
-public record RegisterMovieOutput(string Id);
+public record RegisterMovieOutput(Guid Id);
 
-public class RegisterMovie(
+public sealed class RegisterMovie(
     IUnitOfWork uow,
     ILogger<RegisterMovie> logger
 ) : IUseCase<RegisterMovieInput, RegisterMovieOutput>
@@ -37,6 +37,6 @@ public class RegisterMovie(
 
         logger.LogInformation("Movie registered: {MovieId}", movie.Id.Value);
 
-        return new RegisterMovieOutput(movie.Id.Value.ToString());
+        return new RegisterMovieOutput(movie.Id.Value);
     }
 }

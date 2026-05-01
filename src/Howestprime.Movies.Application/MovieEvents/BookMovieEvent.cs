@@ -1,4 +1,3 @@
-
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents.Exceptions;
 using Howestprime.Movies.Domain.MovieEvent;
@@ -19,20 +18,20 @@ public sealed record BookMovieEventOutput(
 );
 
 public sealed class BookMovieEvent(
-    IUnitOfWork UoW,
+    IUnitOfWork uow,
     ILogger<BookMovieEvent> logger
 ) : IUseCase<BookMovieEventInput, BookMovieEventOutput>
 {
     public async Task<BookMovieEventOutput> Execute(BookMovieEventInput input)
     {
         MovieEventID movieEventId = EntityId.New<MovieEventID>(input.MovieEventId);
-        MovieEvent movieEvent = (await UoW.Repo<IMovieEventRepository>().ById(movieEventId))
-                                .OrElseThrow(()=> throw new MovieEventNotfoundException(movieEventId.Value));
+        MovieEvent movieEvent = (await uow.Repo<IMovieEventRepository>().ById(movieEventId))
+                                .OrElseThrow(()=> new MovieEventNotfoundException(movieEventId.Value));
         
         BookingID bookingId = movieEvent.Book(input.StandardVisitors, input.DiscountVisitors);
 
-        await UoW.Save<IMovieEventRepository>(movieEvent);
-        await UoW.Do();
+        await uow.Save<IMovieEventRepository>(movieEvent);
+        await uow.Do();
 
         logger.LogInformation($"Booking with id: {bookingId} added to Movie Event with id: {movieEvent.Id}");
 

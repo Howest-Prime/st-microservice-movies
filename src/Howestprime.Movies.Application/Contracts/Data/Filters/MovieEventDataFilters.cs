@@ -1,5 +1,5 @@
-
 using System.Linq.Expressions;
+using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
 
 namespace Howestprime.Movies.Application.Contracts.Data.Filters;
 

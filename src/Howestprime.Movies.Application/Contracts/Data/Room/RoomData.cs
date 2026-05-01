@@ -1,5 +1,5 @@
 
-namespace Howestprime.Movies.Application.Contracts.Data;
+namespace Howestprime.Movies.Application.Contracts.Data.Room;
 
 public sealed record RoomData
 {

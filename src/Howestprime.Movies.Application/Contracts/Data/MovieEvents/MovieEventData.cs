@@ -1,5 +1,7 @@
+using Howestprime.Movies.Application.Contracts.Data.Movies;
+using Howestprime.Movies.Application.Contracts.Data.Room;
 
-namespace Howestprime.Movies.Application.Contracts.Data;
+namespace Howestprime.Movies.Application.Contracts.Data.MovieEvents;
 
 public sealed record MovieEventData
 {

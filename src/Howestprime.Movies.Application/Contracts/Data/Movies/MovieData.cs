@@ -1,4 +1,4 @@
-namespace Howestprime.Movies.Application.Contracts.Data;
+namespace Howestprime.Movies.Application.Contracts.Data.Movies;
 
 public sealed record MovieData
 {

@@ -1,7 +1,5 @@
-
-
-using Howestprime.Movies.Application.Contracts.Data;
 using Howestprime.Movies.Application.Contracts.Data.Filters;
+using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
 using Howestprime.Movies.Application.Contracts.Ports;
 
 namespace Howestprime.Movies.Application.MovieEvents;
