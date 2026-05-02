@@ -1,29 +1,25 @@
 using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Shared;
+
 namespace Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
-public sealed record MovieEventShowTime: ValueObject
+public sealed record MovieEventShowTime : ValueObject
 {
-    private static readonly IReadOnlyList<int> VALID_HOURS = new List<int>() {15, 19};
-    public DateTime Value {get; private set;}
+    private static readonly IReadOnlyList<int> VALID_HOURS = new List<int>() { 15, 19 };
 
-    private MovieEventShowTime(
-        DateTime value
-    )
+    public DateTime Value { get; private set; }
+
+    private MovieEventShowTime(DateTime value)
     {
         Value = value;
     }
 
-    public static MovieEventShowTime Create (
-        DateTime value
-    )
+    public static MovieEventShowTime Create(DateTime value)
     {
         MovieEventShowTime newShowTime = new MovieEventShowTime(value);
         newShowTime.Validate();
-        return  newShowTime;
+        return new MovieEventShowTime(value.ToUniversalTime());
     }
-
-
 
     private void Validate()
     {
@@ -35,7 +31,7 @@ public sealed record MovieEventShowTime: ValueObject
     {
         if (!VALID_HOURS.Contains(Value.Hour))
         {
-           throw new InvalidShowHourException(VALID_HOURS);
+            throw new InvalidShowHourException(VALID_HOURS);
         }
     }
 
@@ -46,5 +42,4 @@ public sealed record MovieEventShowTime: ValueObject
             throw new InvalidShowTimeException();
         }
     }
-
 }
