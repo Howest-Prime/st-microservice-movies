@@ -102,7 +102,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
     {
         if(ShowTime.Value > DateTime.UtcNow.AddDays(14))
         {
-            throw new MovieEventBookingTooLateException();
+            throw new MovieEventTooFarInFutureException();
         }
     }
 
