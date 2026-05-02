@@ -1,6 +1,6 @@
 using Howestprime.Movies.Domain.Shared;
 
-namespace Howestprime.Movies.Domain.MovieEvent.ValueObject;
+namespace Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
 public readonly struct MovieEventID : IEntityId
 {

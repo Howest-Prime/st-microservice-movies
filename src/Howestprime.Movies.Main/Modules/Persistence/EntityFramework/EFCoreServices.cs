@@ -7,7 +7,7 @@ using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuratio
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Interceptors;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Repositories;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
-using Howestprime.Movies.Domain.MovieEvent;
+using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.Room;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.MovieEvents;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.Movies;

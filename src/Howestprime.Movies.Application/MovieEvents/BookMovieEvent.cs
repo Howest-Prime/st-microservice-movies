@@ -1,7 +1,7 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents.Exceptions;
-using Howestprime.Movies.Domain.MovieEvent;
-using Howestprime.Movies.Domain.MovieEvent.ValueObject;
+using Howestprime.Movies.Domain.Movies.MovieEvent;
+using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 using Microsoft.Extensions.Logging;
 

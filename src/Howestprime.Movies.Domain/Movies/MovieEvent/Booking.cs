@@ -1,7 +1,7 @@
-using Howestprime.Movies.Domain.MovieEvent.ValueObject;
+using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 
-namespace Howestprime.Movies.Domain.MovieEvent;
+namespace Howestprime.Movies.Domain.Movies.MovieEvent;
 
 public sealed class Booking : Entity<BookingID>
 {

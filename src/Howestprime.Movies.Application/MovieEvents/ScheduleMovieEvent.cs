@@ -1,6 +1,6 @@
 using Howestprime.Movies.Application.Contracts.Ports;
-using Howestprime.Movies.Domain.MovieEvent;
-using Howestprime.Movies.Domain.MovieEvent.ValueObject;
+using Howestprime.Movies.Domain.Movies.MovieEvent;
+using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Movies.Movie;
 using Howestprime.Movies.Domain.Movies.Movie.Repositories;
 using Howestprime.Movies.Domain.Movies.Room;
@@ -8,7 +8,6 @@ using Howestprime.Movies.Domain.Movies.Room.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
-using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace Howestprime.Movies.Application.MovieEvents;

@@ -1,10 +1,10 @@
 using Howestprime.Movies.Domain.MovieEvent.Exceptions;
-using Howestprime.Movies.Domain.MovieEvent.ValueObject;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
+using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Shared;
+using Howestprime.Movies.Domain.Movies.MovieEvent.Events;
 
-namespace Howestprime.Movies.Domain.MovieEvent;
+namespace Howestprime.Movies.Domain.Movies.MovieEvent;
 
 public sealed class MovieEvent : AggregateRoot<MovieEventID>
 {
@@ -65,6 +65,16 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
         );
 
         Bookings.Add(newBooking);
+        
+        RaiseDomainEvent(BookingOpened.Create(
+            newBookingId,
+            MovieId,
+            RoomId,
+            ShowTime,
+            standardVisitors,
+            discountVisitors,
+            Bookings.ToList()
+        ));
 
         return newBookingId;
     }

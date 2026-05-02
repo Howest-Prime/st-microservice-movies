@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Howestprime.Movies.Domain.MovieEvent;
+using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Domain;

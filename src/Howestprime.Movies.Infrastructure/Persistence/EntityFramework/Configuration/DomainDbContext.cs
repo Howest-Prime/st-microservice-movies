@@ -4,7 +4,7 @@ using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Domain.Shared.DomainEvents;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Converters;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Domain;
-using Howestprime.Movies.Domain.MovieEvent;
+using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.Room;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
