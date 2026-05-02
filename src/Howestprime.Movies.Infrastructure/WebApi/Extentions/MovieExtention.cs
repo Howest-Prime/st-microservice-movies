@@ -7,7 +7,7 @@ public static class MovieExtention
     public static MovieResponse ToMovieResponse(this MovieData movie)
     {
         return new MovieResponse(
-            Id: movie.Id.ToString(),
+            Id: movie.Id,
             Title: movie.Title,
             Description: movie.Description,
             Duration: movie.Duration,

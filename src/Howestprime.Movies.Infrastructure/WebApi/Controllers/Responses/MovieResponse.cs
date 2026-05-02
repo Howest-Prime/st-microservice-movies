@@ -1,13 +1,13 @@
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 
 public record MovieResponse(
-    string Id,
+    Guid Id,
     string Title,
     string Description,
     int Duration,
-    IList<string> Genres,
+    IReadOnlyList<string> Genres,
     int ReleaseYear,
-    IList<string> Actors,
+    IReadOnlyList<string> Actors,
     int AgeRating,
     string PosterUrl
 );
