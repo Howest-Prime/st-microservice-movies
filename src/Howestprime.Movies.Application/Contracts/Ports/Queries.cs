@@ -13,7 +13,7 @@ public interface ISearchMovieCatalogQuery
     );
 }
 
-public interface ISearchMovieEventsInTimeRangeQuery
+public interface IMovieEventQuery
 {
     public Task<Optional<IReadOnlyList<MovieEventData>>> Fetch(
         Expression<Func<MovieEventData, bool>>? filter = null

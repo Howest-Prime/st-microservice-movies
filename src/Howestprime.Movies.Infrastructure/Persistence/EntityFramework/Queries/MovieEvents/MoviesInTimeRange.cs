@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries.MovieEvents;
 
-public sealed class MoviesInTimeRange(QueryDbContext context) : ISearchMovieEventsInTimeRangeQuery
+public sealed class MoviesInTimeRange(QueryDbContext context) : IMovieEventQuery
 {
     public async Task<Optional<IReadOnlyList<MovieEventData>>> Fetch(
         Expression<Func<MovieEventData, bool>>? filter = null)

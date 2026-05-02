@@ -11,12 +11,12 @@ public sealed record SearchMovieEventsInTimeRangeInput(
 );
 
 public sealed class SearchMovieEventsInTimeRange(
-    ISearchMovieEventsInTimeRangeQuery searchMovieEventsInTimeRangeQuery
+    IMovieEventQuery movieEventQuery
 ) : IUseCase<SearchMovieEventsInTimeRangeInput, Optional<IReadOnlyList<MovieEventData>>>
 {
     public Task<Optional<IReadOnlyList<MovieEventData>>> Execute(SearchMovieEventsInTimeRangeInput input)
     {
-        return searchMovieEventsInTimeRangeQuery.Fetch(
+        return movieEventQuery.Fetch(
             MovieEventDataFilters.InTimeRange(input.From, input.To)
         );
     }
