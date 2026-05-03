@@ -3,13 +3,13 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.Room;
 
-public sealed class Room: AggregateRoot<RoomID>
+public sealed class Room: AggregateRoot<RoomId>
 {
     public string Name {get; private set;}
     public int Capacity {get; private set;}
     
     private Room(
-        RoomID id,
+        RoomId id,
         string name,
         int capacity
     ): base(id)
@@ -19,7 +19,7 @@ public sealed class Room: AggregateRoot<RoomID>
     }
 
     public static Room Create(
-        RoomID id,
+        RoomId id,
         string name,
         int capacity
     )
@@ -32,7 +32,6 @@ public sealed class Room: AggregateRoot<RoomID>
     public override void ValidateState()
     {
         Asserts.EnsureNotEmpty(Name);
-        Asserts.EnsureGreaterThan(0, Capacity);
+        Asserts.EnsureGreaterThan(Capacity, 0);
     }
 }
-

@@ -6,7 +6,7 @@ using Howestprime.Movies.Domain.Movies.MovieEvent.Events;
 
 namespace Howestprime.Movies.Domain.Movies.MovieEvent;
 
-public sealed class MovieEvent : AggregateRoot<MovieEventID>
+public sealed class MovieEvent : AggregateRoot<MovieEventId>
 {
 
     public Guid MovieId {get; private set;}
@@ -20,10 +20,12 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
 
     private MovieEvent()
     {
+        ShowTime = null!;
+        Capacity = null!;
     }
 
     private MovieEvent(
-        MovieEventID id,
+        MovieEventId id,
         Guid movieId,
         Guid roomId,
         MovieEventShowTime showTime,
@@ -38,7 +40,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
     }
 
     public static MovieEvent Create(
-        MovieEventID id,
+        MovieEventId id,
         Guid movieId,
         Guid roomId,
         MovieEventShowTime showTime,
@@ -50,14 +52,14 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
         return newMovieEvent;
     }
 
-    public BookingID Book(
+    public BookingId Book(
         int standardVisitors,
         int discountVisitors
     )
     {
         EnsureValidBooking(standardVisitors + discountVisitors);
 
-        BookingID newBookingId = EntityId.New<BookingID>();
+        BookingId newBookingId = EntityId.New<BookingId>();
         Booking newBooking = Booking.Create(
             newBookingId,
             standardVisitors,
@@ -90,7 +92,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
         MovieId = movieId;
     }
 
-    public Booking CloseBooking(BookingID bookingId , PaymentStatus paymentStatus)
+    public Booking CloseBooking(BookingId bookingId , PaymentStatus paymentStatus)
     {
         Booking bookingToClose = GetBookingById(bookingId);
         bookingToClose.Close(paymentStatus);
@@ -98,7 +100,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
     }
 
 
-    private Booking GetBookingById(BookingID bookingId)
+    private Booking GetBookingById(BookingId bookingId)
     {
         Booking? booking = Bookings.FirstOrDefault(b => b.Id.Equals(bookingId))
             ?? throw new InvalidBookingException(bookingId.Value);
@@ -133,4 +135,3 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
         }
     }
 }
-

@@ -1,6 +1,6 @@
 using Howestprime.Movies.Domain.Shared;
 
-namespace Howestprime.Movies.Domain.Movies.MovieEvent.Events;
+namespace Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 
 public sealed class InvalidBookingException : DomainException
 {

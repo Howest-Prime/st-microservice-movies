@@ -4,7 +4,7 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.MovieEvent;
 
-public sealed class Booking : Entity<BookingID>
+public sealed class Booking : Entity<BookingId>
 {
     public BookingStatus BookingStatus { get; private set; } = BookingStatus.Open;
     public PaymentStatus PaymentStatus { get; private set; } = PaymentStatus.Pending;
@@ -17,11 +17,11 @@ public sealed class Booking : Entity<BookingID>
 
     private Booking()
     {
-        
+        SeatNumbers = null!;
     }
 
     private Booking(
-        BookingID id,
+        BookingId id,
         int standardVisitors,
         int discountVisitors,
         IReadOnlyList<string> bookingSeats
@@ -33,7 +33,7 @@ public sealed class Booking : Entity<BookingID>
     }
 
     public static Booking Create(
-        BookingID id,
+        BookingId id,
         int standardVisitors,
         int discountVisitors,
         int startSeatNumber

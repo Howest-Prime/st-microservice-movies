@@ -1,11 +1,11 @@
 using Howestprime.Movies.Domain.Shared;
 namespace Howestprime.Movies.Domain.Movies.Room.ValueObjects;
 
-public readonly struct RoomID: IEntityId
+public readonly struct RoomId: IEntityId
 {
     public Guid Value {get;}
 
-    public RoomID(
+    public RoomId(
         Guid value
     )
     {

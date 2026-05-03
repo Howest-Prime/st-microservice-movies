@@ -7,9 +7,9 @@ using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.MovieEvent;
 
-public interface IMovieEventRepository : IRepository<MovieEvent, MovieEventID>
+public interface IMovieEventRepository : IRepository<MovieEvent, MovieEventId>
 {
     Task<MovieEvent?> ByRoomIdAndShowTime(Guid roomId, MovieEventShowTime showTime);
 
-    Task<MovieEvent?> ByBookingId(BookingID bookingId);
+    Task<MovieEvent?> ByBookingId(BookingId bookingId);
 }

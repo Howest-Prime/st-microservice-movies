@@ -5,7 +5,7 @@ namespace Howestprime.Movies.Domain.Movies.MovieEvent.Events;
 
 public sealed class BookingOpened : MovieEventDomainEvent
 {
-    public BookingID BookingId { get; private init; }
+    public BookingId BookingId { get; private init; }
     public Guid MovieId { get; private init; }
     public Guid RoomId { get; private init; }
     public MovieEventShowTime ShowTime { get; private init; }
@@ -16,7 +16,7 @@ public sealed class BookingOpened : MovieEventDomainEvent
 
 
     private BookingOpened(
-        BookingID bookingId,
+        BookingId bookingId,
         Guid movieId,
         Guid roomId,
         MovieEventShowTime showTime,
@@ -35,7 +35,7 @@ public sealed class BookingOpened : MovieEventDomainEvent
     }
 
     public static BookingOpened Create(
-        BookingID bookingId,
+        BookingId bookingId,
         Guid movieId,
         Guid roomId,
         MovieEventShowTime showTime,
