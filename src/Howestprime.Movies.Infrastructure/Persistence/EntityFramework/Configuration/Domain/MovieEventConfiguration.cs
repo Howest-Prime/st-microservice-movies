@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
+using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Domain;
 
@@ -29,6 +30,12 @@ public sealed class MovieEventConfiguration : IEntityTypeConfiguration<MovieEven
 
             actorBuilder.Property(booking => booking.Id).IsRequired();
 
+            actorBuilder.Property(booking => booking.Id)
+            .HasConversion(
+                    v => v.Value,
+                    v => EntityId.New<BookingID>(v))
+                    .IsRequired();
+
             actorBuilder.Property(booking => booking.BookingStatus)
                     .HasConversion<string>()
                     .IsRequired();
@@ -43,3 +50,4 @@ public sealed class MovieEventConfiguration : IEntityTypeConfiguration<MovieEven
         });
     }
 }
+

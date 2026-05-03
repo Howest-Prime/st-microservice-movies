@@ -21,4 +21,10 @@ public class EFCoreMovieEventRepository : EfCoreGenericRepository<MovieEvent, Mo
             .FirstOrDefaultAsync(me => me.RoomId == roomId && 
                         me.ShowTime == showTime);
     }   
+
+   public async Task<MovieEvent?> ByBookingId(BookingID bookingId)
+    {
+        return await _context.MovieEvents
+            .FirstOrDefaultAsync(me => me.Bookings.Any(b => b.Id.Equals(bookingId)));
+    }
 }

@@ -40,6 +40,6 @@ public  static class RegisterMovieController
 
         RegisterMovieOutput result = await request.UseCase.Execute(newMovie);
         
-        return Results.Created($"/movies/{result.Id}", result.Id);
+        return Results.Created($"/movies/{result.Id}", result);
     }
 }
