@@ -11,51 +11,48 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore test/UnitTests/UnitTests.csproj
 
-      - name: Build solution
-        run: dotnet build --configuration Release --no-restore
-
-      - name: Run unit tests
-        run: dotnet test test/UnitTests/UnitTests.csproj --configuration Release --no-build --verbosity normal
-
+    - name: Run unit tests
+      run: dotnet test test/UnitTests/UnitTests.csproj \
+        --configuration Release \
+        --verbosity normal
 
   coverage:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore test/UnitTests/UnitTests.csproj
 
-      - name: Run tests with coverage
-        run: |
-          dotnet test test/UnitTests/UnitTests.csproj \
-            --configuration Release \
-            /p:CollectCoverage=true \
-            /p:CoverletOutputFormat=opencover \
-            /p:Threshold=97 \
-            /p:ThresholdType=line \
-            '/p:Include=[Howestprime.Movies.Application]*,[Howestprime.Movies.Domain]*'
+    - name: Run tests with coverage
+      run: dotnet test test/UnitTests/UnitTests.csproj \
+        /p:CollectCoverage=true \
+        /p:CoverletOutputFormat=opencover \
+        /p:CoverletOutput=./coverage/ \
+        /p:Threshold=97 \
+        /p:ThresholdType=line \
+        '/p:Include="[Howestprime.Movies.Application]*,[Howestprime.Movies.Domain]*"'
 
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: "**/coverage.opencover.xml"
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: test/UnitTests/coverage/
