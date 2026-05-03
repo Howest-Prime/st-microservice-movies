@@ -44,6 +44,7 @@ jobs:
 
     - name: Run tests with coverage
       run: dotnet test test/UnitTests/UnitTests.csproj \
+        --configuration Release \
         /p:CollectCoverage=true \
         /p:CoverletOutputFormat=opencover \
         /p:CoverletOutput=./coverage/ \
