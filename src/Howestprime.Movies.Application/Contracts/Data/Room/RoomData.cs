@@ -3,7 +3,7 @@ namespace Howestprime.Movies.Application.Contracts.Data.Room;
 
 public sealed record RoomData
 {
-    public required Guid Id { get; init; }
-    public required string Name { get; init; }
-    public required int Capacity { get; init; }
+    public Guid Id { get; init; } = Guid.Empty;
+    public string Name { get; init; } = string.Empty;
+    public int Capacity { get; init; }
 }

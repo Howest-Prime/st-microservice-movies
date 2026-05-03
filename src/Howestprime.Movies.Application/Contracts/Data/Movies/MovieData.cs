@@ -2,13 +2,13 @@ namespace Howestprime.Movies.Application.Contracts.Data.Movies;
 
 public sealed record MovieData
 {
-    public required Guid Id { get; init; }
-    public required string Title { get; init; }
-    public required string Description { get; init; }
-    public required int ReleaseYear { get; init; }
-    public required int Duration { get; init; }
-    public required IReadOnlyList<GenreData> Genres { get; init; }
-    public required IReadOnlyList<ActorData> Actors { get; init; }
-    public required int AgeRating { get; init; }
-    public required string PosterUrl { get; init; }
+    public Guid Id { get; init; } = Guid.Empty;
+    public string Title { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public int ReleaseYear { get; init; }
+    public int Duration { get; init; }
+    public IReadOnlyList<GenreData> Genres { get; init; } = new List<GenreData>();
+    public IReadOnlyList<ActorData> Actors { get; init; } = new List<ActorData>();
+    public int AgeRating { get; init; }
+    public string PosterUrl { get; init; } = string.Empty;
 }
