@@ -29,7 +29,7 @@ public static class ScheduleMovieEventController
             request.Body.ShowTime
         );
         ScheduleMovieEventOutput output = await request.UseCase.Execute(input);
-        return Results.Created($"/movieevents/{output.MovieEventID}", output);
+        return Results.Created($"/movieevents/{output.MovieEventId}", output);
     }
 }
 

@@ -34,8 +34,8 @@ public static class Routes
             .WithName("SearchMovieByTitleAndGenres")
             .WithDescription("Search movies by title and/or genres.");
 
-        movieCatalog.MapGet("/{movieId}", FindMovieByIDController.Invoke)
-            .WithName("FindMovieByID")
+        movieCatalog.MapGet("/{movieId}", FindMovieByIdController.Invoke)
+            .WithName("FindMovieById")
             .WithDescription("Find a movie by its ID.");
         movieCatalog.MapPut("/{movieId}", ChangeMovieDetailsController.Invoke)
             .WithName("ChangeMovieDetails")

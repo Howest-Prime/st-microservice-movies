@@ -7,5 +7,8 @@ public class DomainDbSeeder(DomainDbContext context, ILogger<DomainDbSeeder> log
 {
     public async Task Seed()
     {
+        _ = context;
+        _ = logger;
+        await Task.CompletedTask;
     }
 }

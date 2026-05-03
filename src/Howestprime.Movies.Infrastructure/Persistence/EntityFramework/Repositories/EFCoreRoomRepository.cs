@@ -4,7 +4,7 @@ using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuratio
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Repositories;
 
-public class EFCoreRoomRepository : EfCoreGenericRepository<Room, RoomID>, IRoomRepository
+public class EFCoreRoomRepository : EfCoreGenericRepository<Room, RoomId>, IRoomRepository
 {
     public EFCoreRoomRepository(DomainDbContext context) : base(context) { }
 

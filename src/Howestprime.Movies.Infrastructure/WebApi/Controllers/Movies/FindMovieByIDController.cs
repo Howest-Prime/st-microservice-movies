@@ -8,17 +8,17 @@ using Howestprime.Movies.Application.Contracts.Data.Movies;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
-public sealed record FindMovieByIDRequest(
+public sealed record FindMovieByIdRequest(
     [FromHeader(Name = "X-User-Role")] string UserRole,
     [FromRoute] Guid MovieId,
-    [FromServices] IUseCase<FindMovieByIDInput, Optional<MovieData>>UseCase
+    [FromServices] IUseCase<FindMovieByIdInput, Optional<MovieData>>UseCase
 );
 
-public static class FindMovieByIDController
+public static class FindMovieByIdController
 {
-    public static async Task<IResult> Invoke([AsParameters] FindMovieByIDRequest request)
+    public static async Task<IResult> Invoke([AsParameters] FindMovieByIdRequest request)
     {
-        FindMovieByIDInput input = new(request.UserRole, request.MovieId);
+        FindMovieByIdInput input = new(request.UserRole, request.MovieId);
         Optional<MovieData> result = await request.UseCase.Execute(input);
 
         return result.HasValue
