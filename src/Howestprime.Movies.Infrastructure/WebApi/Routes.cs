@@ -37,6 +37,9 @@ public static class Routes
         movieCatalog.MapGet("/{movieId}", FindMovieByIDController.Invoke)
             .WithName("FindMovieByID")
             .WithDescription("Find a movie by its ID.");
+        movieCatalog.MapPut("/{movieId}", ChangeMovieDetailsController.Invoke)
+            .WithName("ChangeMovieDetails")
+            .WithDescription("Change the details of a movie in the catalog.");
 
         return movieCatalog;
     }
