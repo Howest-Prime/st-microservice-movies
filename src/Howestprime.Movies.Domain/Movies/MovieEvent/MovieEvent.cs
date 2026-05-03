@@ -14,7 +14,8 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
     public MovieEventShowTime ShowTime {get; private set;}
     public Capacity Capacity {get; private set;}
     public IList<Booking> Bookings {get; private set;} = new List<Booking>();
-    public int Visitors => Bookings.Sum(booking => booking.TotalVisitors);
+    public int Visitors => Bookings.Where(b => b.PaymentStatus != PaymentStatus.Failed)
+                                        .Sum(booking => booking.TotalVisitors);
 
 
     private MovieEvent()
@@ -78,6 +79,32 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
 
         return newBookingId;
     }
+
+     public void UpdateMovie(object value)
+    {
+        if(value is not Guid movieId)
+        {
+            throw new InvalidMovieUpdateException();
+        }
+
+        MovieId = movieId;
+    }
+
+    public Booking CloseBooking(BookingID bookingId , PaymentStatus paymentStatus)
+    {
+        Booking bookingToClose = GetBookingById(bookingId);
+        bookingToClose.Close(paymentStatus);
+        return bookingToClose;
+    }
+
+
+    private Booking GetBookingById(BookingID bookingId)
+    {
+        Booking? booking = Bookings.FirstOrDefault(b => b.Id.Equals(bookingId))
+            ?? throw new InvalidBookingException(bookingId.Value);
+
+        return booking;
+    }
     
     public override void ValidateState()
     {
@@ -105,14 +132,5 @@ public sealed class MovieEvent : AggregateRoot<MovieEventID>
             throw new MovieEventTooFarInFutureException();
         }
     }
-
-    public void UpdateMovie(object value)
-    {
-        if(value is not Guid movieId)
-        {
-            throw new InvalidMovieUpdateException();
-        }
-
-        MovieId = movieId;
-    }
 }
+

@@ -1,3 +1,4 @@
+using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 
@@ -50,6 +51,22 @@ public sealed class Booking : Entity<BookingID>
 
         newBooking.ValidateState();
         return newBooking;
+    }
+
+    public Booking Close(PaymentStatus paymentStatus)
+    {
+        if(BookingStatus == BookingStatus.Closed)
+        {
+            throw new BookingAlreadyClosedException(Id.Value);
+        }
+        
+        BookingStatus = BookingStatus.Closed;
+        PaymentStatus = paymentStatus;
+        SeatNumbers = paymentStatus == PaymentStatus.Failed 
+                                ? new List<string>() 
+                                : SeatNumbers;
+
+        return this;
     }
 
     

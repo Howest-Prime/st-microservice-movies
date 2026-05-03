@@ -10,4 +10,6 @@ namespace Howestprime.Movies.Domain.Movies.MovieEvent;
 public interface IMovieEventRepository : IRepository<MovieEvent, MovieEventID>
 {
     Task<MovieEvent?> ByRoomIdAndShowTime(Guid roomId, MovieEventShowTime showTime);
+
+    Task<MovieEvent?> ByBookingId(BookingID bookingId);
 }
