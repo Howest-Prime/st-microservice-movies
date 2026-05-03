@@ -18,7 +18,8 @@ public static class ModuleExtensions
             .AddDomainEventModule(configuration)
             .AddEFCoreModule(configuration)
             .AddWebApiModule(configuration)
-            .AddAuthorizationModule(configuration);
+            .AddAuthorizationModule(configuration)
+            .AddMessagingModule(configuration);
 
     }
 

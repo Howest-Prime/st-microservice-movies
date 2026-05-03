@@ -1,4 +1,7 @@
+using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents;
+using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents.Movies.Controllers;
 using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents.Shared;
+using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents.Shared.Contracts;
 using Howestprime.Movies.Infrastructure.Messaging.IntegrationEvents.Shared.Extensions;
 
 namespace Howestprime.Movies.Main.Modules.Messaging.IntegrationEvents;
@@ -13,6 +16,9 @@ public static class MessagingModule
         return
             services
                 .AddAmqpServices(configuration)
+
+                .AddKeyedScoped<IController<ConsumerContext>, WhenPaymentFailedCloseBookingController>(OperationIds.WhenPaymentFailedCloseBooking.ToString())
+                .AddKeyedScoped<IController<ConsumerContext>, WhenPaymentSuccessfulCloseBookingController>(OperationIds.WhenPaymentSuccessCloseBooking.ToString())
 
                 .AddHostedService<MessagingBackgroundWorker>();
     }
