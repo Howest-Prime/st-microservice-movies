@@ -71,5 +71,24 @@ public sealed class Movie : AggregateRoot<MovieId>
         return movie;
     }
 
+    public void ChangeDetails(MovieTitle movieTitle, MovieDescription movieDescription, MovieReleaseYear movieReleaseYear, List<MovieGenre> movieGenres, List<Actor> actors, AgeRating ageRating, PosterUrl posterUrl)
+    {
+        Title = movieTitle;
+        Description = movieDescription;
+        ReleaseYear = movieReleaseYear;
+        _genres = movieGenres;
+        _actors = actors;
+        AgeRating = ageRating;
+        PosterUrl = posterUrl;
+
+        RaiseDomainEvent(
+            new MovieDetailsChanged(Id, Title, Description, ReleaseYear, Genres, Actors, AgeRating, PosterUrl)
+        );
+
+        
+    }
+
     public override void ValidateState() { }
+
+
 }
