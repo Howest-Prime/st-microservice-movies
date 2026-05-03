@@ -39,6 +39,7 @@ public sealed class ScheduleMovieEvent(
         {
             existingMovieEvent.UpdateMovie(movieId.Value);
 
+            await uow.Save<IMovieEventRepository>(existingMovieEvent);
             await uow.Do();
 
             logger.LogInformation("Updated existing movie event with id {MovieEventID} to movie {MovieID} in room {RoomID} at {ShowTime}.", existingMovieEvent.Id, existingMovieEvent.MovieId, existingMovieEvent.RoomId, existingMovieEvent.ShowTime);
