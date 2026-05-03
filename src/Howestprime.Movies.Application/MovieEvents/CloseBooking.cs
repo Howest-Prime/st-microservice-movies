@@ -2,7 +2,7 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Events;
+using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 using Microsoft.Extensions.Logging;
@@ -23,7 +23,7 @@ public sealed class CloseBooking(
 {
     public async Task Execute(CloseBookingInput input)
     {
-        BookingID bookingId = EntityId.New<BookingID>(input.BookingId);
+        BookingId bookingId = EntityId.New<BookingId>(input.BookingId);
         MovieEvent? movieEvent = await unitOfWork.Repo<IMovieEventRepository>().ByBookingId(bookingId) 
                     ?? throw new InvalidBookingException(bookingId.Value);
         

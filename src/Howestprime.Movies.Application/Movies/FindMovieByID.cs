@@ -6,20 +6,20 @@ using Howestprime.Movies.Application.Movies.Exceptions;
 
 namespace Howestprime.Movies.Application.Movies;
 
-public sealed record FindMovieByIDInput(string Role, Guid MovieID);
+public sealed record FindMovieByIdInput(string Role, Guid MovieId);
 
-public sealed class FindMovieByID(
+public sealed class FindMovieById(
     ISearchMovieCatalogQuery moviesQuery,
     IAuthorizationService authorizationService
-) : IUseCase<FindMovieByIDInput, Optional<MovieData>>
+) : IUseCase<FindMovieByIdInput, Optional<MovieData>>
 {
-    public async Task<Optional<MovieData>> Execute(FindMovieByIDInput input)
+    public async Task<Optional<MovieData>> Execute(FindMovieByIdInput input)
     {
-        await authorizationService.Authorize(input.Role, nameof(FindMovieByID));
+        await authorizationService.Authorize(input.Role, nameof(FindMovieById));
 
         IReadOnlyList<MovieData> movies = 
-                    (await moviesQuery.Fetch(MovieDataFilter.ByID(input.MovieID)))
-                    .OrElseThrow(() => new MovieNotFoundException(input.MovieID) );
+                    (await moviesQuery.Fetch(MovieDataFilter.ById(input.MovieId)))
+                    .OrElseThrow(() => new MovieNotFoundException(input.MovieId) );
 
         return movies.FirstOrDefault() ;
     }

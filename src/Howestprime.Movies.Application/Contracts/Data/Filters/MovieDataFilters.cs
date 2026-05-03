@@ -25,7 +25,7 @@ public static class MovieDataFilter
         )));
     }
 
-    public static Expression<Func<MovieData, bool>> ByID(Guid id)
+    public static Expression<Func<MovieData, bool>> ById(Guid id)
     {
         return movie => movie.Id == id;
     } 

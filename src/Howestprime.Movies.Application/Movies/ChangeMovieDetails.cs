@@ -15,7 +15,7 @@ public record ChangeMovieDetailsInput(
     int ReleaseYear,
     string[] Genre,
     string[] Actors,
-    int ageRating,
+    int AgeRating,
     string PosterUrl
 );
 
@@ -26,7 +26,7 @@ public record ChangeMovieDetailsOutput(
     int ReleaseYear,
     string[] Genre,
     string[] Actors,
-    string ageRating,
+    string AgeRating,
     string PosterUrl
 );
 
@@ -48,7 +48,7 @@ public sealed class ChangeMovieDetails(
             MovieReleaseYear.Create(input.ReleaseYear),
             input.Genre.Select(g => MovieGenre.Create(g)).ToList(),
             input.Actors.Select(a => Actor.Create(a)).ToList(),
-            AgeRating.From(input.ageRating),
+            AgeRating.From(input.AgeRating),
             PosterUrl.Create(input.PosterUrl)
         );
 
