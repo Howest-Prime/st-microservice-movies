@@ -19,7 +19,7 @@ public sealed record SearchMovieByTitleAndGenresRequest(
 
 public static class SearchMovieByTitleAndGenresController
 {
-    public static async Task<Results<Ok<IReadOnlyList<MovieResponse>>, NotFound>> Invoke(
+    public static async Task<Results<Ok<SearchMovieCatalogResponse>, NotFound>> Invoke(
         [AsParameters] SearchMovieByTitleAndGenresRequest request
     )
     {
@@ -32,6 +32,12 @@ public static class SearchMovieByTitleAndGenresController
             return TypedResults.NotFound();
         }
 
-        return TypedResults.Ok(result.Value.ToMovieResponseList());
+        return TypedResults.Ok(
+             new SearchMovieCatalogResponse(result.Value.ToMovieResponseList())
+        );
     }
 }
+
+public sealed record SearchMovieCatalogResponse(
+    IReadOnlyList<MovieResponse> Data
+);
