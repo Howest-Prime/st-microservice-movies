@@ -14,10 +14,7 @@ public sealed class Booking : Entity<BookingId>
     public int TotalVisitors => StandardVisitors + DiscountVisitors;
 
 
-    private Booking()
-    {
-        SeatNumbers = null!;
-    }
+    private Booking(){ }
 
     private Booking(
         BookingId id,

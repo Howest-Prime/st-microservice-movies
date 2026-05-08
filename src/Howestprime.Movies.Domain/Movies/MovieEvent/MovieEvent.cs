@@ -17,11 +17,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
                                         .Sum(booking => booking.TotalVisitors);
 
 
-    private MovieEvent()
-    {
-        ShowTime = null!;
-        Capacity = null!;
-    }
+    private MovieEvent() {}
 
     private MovieEvent(
         MovieEventId id,

@@ -19,15 +19,7 @@ public sealed class Movie : AggregateRoot<MovieId>
     private List<Actor> _actors = new List<Actor>();
     private List<MovieGenre> _genres = new List<MovieGenre>();
 
-    private Movie() : base()
-{
-    Title = null!;
-    Description = null!;
-    ReleaseYear = null!;
-    Duration = null!;
-    AgeRating = null!;
-    PosterUrl = null!;
-}
+    private Movie() : base(){}
 
     private Movie(
         MovieId id,
