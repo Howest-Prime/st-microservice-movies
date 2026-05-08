@@ -24,7 +24,6 @@ jobs:
 
     - name: Run unit tests
       run: dotnet test test/UnitTests/UnitTests.csproj \
-        --no-restore \
         --configuration Release \
         --verbosity normal
 
@@ -46,7 +45,6 @@ jobs:
 
     - name: Run tests with coverage
       run: dotnet test test/UnitTests/UnitTests.csproj \
-        --no-restore \
         --configuration Release \
         /p:CollectCoverage=true \
         /p:CoverletOutputFormat=opencover \
