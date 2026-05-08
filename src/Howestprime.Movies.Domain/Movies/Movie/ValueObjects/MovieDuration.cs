@@ -1,5 +1,4 @@
 using Howestprime.Movies.Domain.Shared;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
@@ -15,13 +14,10 @@ public sealed record MovieDuration : ValueObject
     }
 
     public static MovieDuration Create(
-        int value
+        int movieDuration
     )
     {
-        if (value <= 0)
-        {
-            throw new InvalidMovieDurationException(value);
-        }
-        return new MovieDuration(value);
+        Asserts.EnsureGreaterThan(movieDuration, 0);
+        return new MovieDuration(movieDuration);
     }
 }

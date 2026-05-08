@@ -2,7 +2,7 @@ using Aornis;
 using Howestprime.Movies.Application.Contracts.Data.Filters;
 using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Howestprime.Movies.Application.Contracts.Ports;
-using Howestprime.Movies.Application.Movies.Exceptions;
+using Howestprime.Movies.Shared.Exceptions;
 
 namespace Howestprime.Movies.Application.Movies;
 
@@ -19,7 +19,7 @@ public sealed class FindMovieById(
 
         IReadOnlyList<MovieData> movies = 
                     (await moviesQuery.Fetch(MovieDataFilter.ById(input.MovieId)))
-                    .OrElseThrow(() => new MovieNotFoundException(input.MovieId) );
+                    .OrElseThrow(() => new NotFoundException($"Movie with id {input.MovieId} not found."));
 
         return movies.FirstOrDefault() ;
     }

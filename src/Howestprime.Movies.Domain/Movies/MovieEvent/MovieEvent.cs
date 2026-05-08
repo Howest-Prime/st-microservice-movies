@@ -1,8 +1,7 @@
-using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Domain.Movies.MovieEvent.Events;
+using Howestprime.Movies.Shared.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.MovieEvent;
 
@@ -82,14 +81,9 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
         return newBookingId;
     }
 
-     public void UpdateMovie(object value)
+     public void UpdateMovie(Guid value)
     {
-        if(value is not Guid movieId)
-        {
-            throw new InvalidMovieUpdateException();
-        }
-
-        MovieId = movieId;
+        MovieId = value;
     }
 
     public Booking CloseBooking(BookingId bookingId , PaymentStatus paymentStatus)
@@ -103,7 +97,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     private Booking GetBookingById(BookingId bookingId)
     {
         Booking? booking = Bookings.FirstOrDefault(b => b.Id.Equals(bookingId))
-            ?? throw new InvalidBookingException(bookingId.Value);
+            ?? throw new NotFoundException($"Booking with id '{bookingId}' was not found.");
 
         return booking;
     }
@@ -123,7 +117,8 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     {
         if(Capacity.Value < Visitors + toAddVisitors)
         {
-            throw new MovieEventCapacityExceededException(Capacity.Value - Visitors);
+            throw new ArgumentException(
+            $"Not enough capacity. Only {Capacity.Value - Visitors} spot(s) remaining.");
         }
     }
 
@@ -131,7 +126,8 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     {
         if(ShowTime.Value > DateTime.UtcNow.AddDays(14))
         {
-            throw new MovieEventTooFarInFutureException();
+          throw new ArgumentException(
+            "Cannot book a movie event that is more than 14 days in the future.");
         }
     }
 }

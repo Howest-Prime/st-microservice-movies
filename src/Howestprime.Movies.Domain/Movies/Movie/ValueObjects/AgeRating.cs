@@ -1,5 +1,4 @@
 using Howestprime.Movies.Domain.Shared;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
@@ -33,10 +32,10 @@ public sealed record AgeRating : ValueObject
     }
 
     public static AgeRating From(
-        int value
+        int ageRating
     )
     {
-        return value switch {
+        return ageRating switch {
             0 => ALL,
             6 => SIX,
             9 => NINE,
@@ -44,7 +43,8 @@ public sealed record AgeRating : ValueObject
             14 => FOURTEEN,
             16 => SIXTEEN,
             18 => EIGHTEEN,
-            _ => throw new InvalidAgeRatingException(value.ToString(), Enum.GetNames<AgeRatingCategory>())
+            _ => throw new ArgumentException( $"Invalid age rating '{ageRating}'. " +
+                    $"Valid values are: {string.Join(", ", (int[])Enum.GetValues(typeof(AgeRatingCategory)))}")
         };
     }
     

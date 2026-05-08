@@ -2,13 +2,12 @@ using Aornis;
 using Howestprime.Movies.Application.Contracts.Data.Filters;
 using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
 using Howestprime.Movies.Application.Contracts.Ports;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 
 namespace Howestprime.Movies.Application.MovieEvents;
 
 public sealed record SearchMovieEventsInTimeRangeInput(
-    DateTime? From,
-    DateTime? To
+    DateTime From,
+    DateTime To
 );
 
 public sealed class SearchMovieEventsInTimeRange(
@@ -17,19 +16,13 @@ public sealed class SearchMovieEventsInTimeRange(
 {
     public Task<Optional<IReadOnlyList<MovieEventData>>> Execute(SearchMovieEventsInTimeRangeInput input)
     {
-
-        DateTime now = DateTime.UtcNow;
-
-        DateTime from = (input.From ?? now).ToUniversalTime();
-        DateTime to   = (input.To ?? now).ToUniversalTime();
-
-        if (from > to)
+        if (input.From > input.To)
         {
-            throw new InvalidTimeRangeException(from, to);
+            throw new ArgumentException("'From' must be before 'To'.");
         }
 
         return movieEventQuery.Fetch(
-            MovieEventDataFilters.InTimeRange(from, to)
+            MovieEventDataFilters.InTimeRange(input.From, input.To)
         );
     }
 }

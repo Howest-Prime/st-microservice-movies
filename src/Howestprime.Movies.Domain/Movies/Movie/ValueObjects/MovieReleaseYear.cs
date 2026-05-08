@@ -1,5 +1,4 @@
 using Howestprime.Movies.Domain.Shared;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
@@ -20,11 +19,16 @@ public sealed record MovieReleaseYear : ValueObject
         int value
     )
     {
-        int currentYear = DateTime.Now.Year;
-        if (value < MIN_YEAR || value > currentYear)
-        {
-            throw new InvalidMovieReleaseYearException(value, MIN_YEAR, currentYear);
-        }
+        EnsureValidMovieReleaseYear(value);
         return new MovieReleaseYear(value);
+    }
+
+    private static void EnsureValidMovieReleaseYear(int year)
+    {
+        int currentYear = DateTime.Now.Year;
+         if (year < MIN_YEAR || year > currentYear)
+        {
+            throw new ArgumentException($"Invalid movie release year. The release year should be between {MIN_YEAR} and {currentYear}");
+        }
     }
 }

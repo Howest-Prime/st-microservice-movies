@@ -1,5 +1,4 @@
 using Howestprime.Movies.Domain.Shared;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
@@ -19,12 +18,7 @@ public sealed record Actor : ValueObject
     )
     {
         string trimmedName = name?.Trim() ?? string.Empty;
-
-        if(string.IsNullOrWhiteSpace(trimmedName))
-        {
-            throw new InvalidActorException(trimmedName);
-        }
-
+        Asserts.EnsureNotEmpty(trimmedName);
         return new Actor(trimmedName);
     }
 }

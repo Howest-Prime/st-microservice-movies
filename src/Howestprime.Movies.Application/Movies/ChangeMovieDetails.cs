@@ -4,7 +4,7 @@ using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Domain.Movies.Movie;
 using Microsoft.Extensions.Logging;
-using Howestprime.Movies.Application.Movies.Exceptions;
+using Howestprime.Movies.Shared.Exceptions;
 
 namespace Howestprime.Movies.Application.Movies;
 
@@ -40,7 +40,7 @@ public sealed class ChangeMovieDetails(
 
         MovieId movieId = EntityId.New<MovieId>(input.MovieId);
         Movie? movie = (await unitOfWork.Repo<IMovieRepository>().ById(movieId))
-                        .OrElseThrow(() =>new MovieNotFoundException(movieId.Value));
+                        .OrElseThrow(() =>new NotFoundException($"Movie with id {input.MovieId} not found."));
 
         movie.ChangeDetails(
             MovieTitle.Create(input.Title),

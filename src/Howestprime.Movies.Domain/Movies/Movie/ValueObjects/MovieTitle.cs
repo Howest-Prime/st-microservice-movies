@@ -1,5 +1,4 @@
 using Howestprime.Movies.Domain.Shared;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
@@ -17,14 +16,14 @@ public sealed record MovieTitle : ValueObject
     }
 
     public static MovieTitle Create(
-        string value
+        string movieTitle
     )
     {
-        string trimmedValue = value?.Trim() ?? string.Empty;
-
-        if(string.IsNullOrWhiteSpace(trimmedValue) || trimmedValue.Length > MAX_LENGTH)
+        Asserts.EnsureNotEmpty(movieTitle);
+        string trimmedValue = movieTitle.Trim();
+        if (trimmedValue.Length > MAX_LENGTH)
         {
-            throw new InvalidMovieTitleException(trimmedValue, MAX_LENGTH);
+            throw new ArgumentException($"Value cannot exceed {MAX_LENGTH} characters.");
         }
         return new MovieTitle(trimmedValue);
     }

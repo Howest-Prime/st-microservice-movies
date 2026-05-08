@@ -1,8 +1,8 @@
 using Howestprime.Movies.Application.Contracts.Ports;
-using Howestprime.Movies.Application.MovieEvents.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
+using Howestprime.Movies.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Howestprime.Movies.Application.MovieEvents;
@@ -26,7 +26,7 @@ public sealed class BookMovieEvent(
     {
         MovieEventId movieEventId = EntityId.New<MovieEventId>(input.MovieEventId);
         MovieEvent movieEvent = (await uow.Repo<IMovieEventRepository>().ById(movieEventId))
-                                .OrElseThrow(()=> new MovieEventNotFoundException(movieEventId.Value));
+                                .OrElseThrow(()=> new NotFoundException($"Movie event with id {movieEventId.Value} not found."));
         
         BookingId bookingId = movieEvent.Book(input.StandardVisitors, input.DiscountVisitors);
 

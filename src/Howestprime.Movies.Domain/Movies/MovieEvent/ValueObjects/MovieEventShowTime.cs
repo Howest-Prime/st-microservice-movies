@@ -1,12 +1,9 @@
-using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Shared;
 
 namespace Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
 public sealed record MovieEventShowTime : ValueObject
 {
-    private static readonly IReadOnlyList<int> VALID_HOURS = new List<int>() { 15, 19 };
-
     public DateTime Value { get; private set; }
 
     private MovieEventShowTime(DateTime value)
@@ -16,30 +13,28 @@ public sealed record MovieEventShowTime : ValueObject
 
     public static MovieEventShowTime Create(DateTime value)
     {
-        MovieEventShowTime newShowTime = new MovieEventShowTime(value);
-        newShowTime.Validate();
+        ValidateMovieEventShowTime(value);
         return new MovieEventShowTime(value.ToUniversalTime());
     }
 
-    private void Validate()
+    private static void ValidateMovieEventShowTime(DateTime dateTime)
     {
-        ValidateAllowedHour();
-        ValidateFutureTime();
+        EnsureShowtimeIsAt15hOr19h(dateTime);
+        EnsureShowtimeIsInTheFuture(dateTime);
     }
 
-    private void ValidateAllowedHour()
+    public static void EnsureShowtimeIsAt15hOr19h(DateTime time)
     {
-        if (!VALID_HOURS.Contains(Value.Hour))
-        {
-            throw new InvalidShowHourException(VALID_HOURS);
-        }
+       if (time.Hour != 15 && time.Hour != 19)
+           throw new ArgumentException("Time must be at 15h or 19h.");
     }
 
-    private void ValidateFutureTime()
+    public static void EnsureShowtimeIsInTheFuture(DateTime time)
     {
-        if (Value <= DateTime.Now)
-        {
-            throw new InvalidShowTimeException();
-        }
+       if (time <= DateTime.Now)
+           throw new ArgumentException($"Movie event {time} must be in the future.");
     }
+
+
+
 }

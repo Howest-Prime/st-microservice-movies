@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
 namespace Howestprime.Movies.Domain.Movies.MovieEvent.Events;

@@ -1,10 +1,9 @@
 
 using Howestprime.Movies.Application.Contracts.Ports;
-using Howestprime.Movies.Application.MovieEvents.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
+using Howestprime.Movies.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Howestprime.Movies.Application.MovieEvents;
@@ -25,7 +24,7 @@ public sealed class CloseBooking(
     {
         BookingId bookingId = EntityId.New<BookingId>(input.BookingId);
         MovieEvent? movieEvent = await unitOfWork.Repo<IMovieEventRepository>().ByBookingId(bookingId) 
-                    ?? throw new InvalidBookingException(bookingId.Value);
+                    ?? throw new NotFoundException($"Movie event with booking id {bookingId.Value} not found.");
         
         PaymentStatus paymentStatus = MapCloseBookingReasonToPaymentStatus(input.CloseBookingReason);
         movieEvent.CloseBooking(bookingId, paymentStatus);
@@ -42,7 +41,7 @@ public sealed class CloseBooking(
         {
             "payment failed" => PaymentStatus.Failed,
             "payment successful" => PaymentStatus.Success,
-            _ => throw new InvalidCloseBookingReasonException(reason)
+            _ => throw new ArgumentException($"Invalid close booking reason: {reason}")
         };
     }
 }

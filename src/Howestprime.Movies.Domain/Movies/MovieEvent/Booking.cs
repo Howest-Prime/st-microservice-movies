@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 
@@ -57,7 +56,7 @@ public sealed class Booking : Entity<BookingId>
     {
         if(BookingStatus == BookingStatus.Closed)
         {
-            throw new BookingAlreadyClosedException(Id.Value);
+            throw new InvalidOperationException($"Booking with bookingId {Id} already closed.");
         }
         
         BookingStatus = BookingStatus.Closed;

@@ -1,5 +1,4 @@
 using Howestprime.Movies.Domain.Shared;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 
 namespace Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
@@ -15,15 +14,11 @@ public sealed record PosterUrl : ValueObject
     }
 
     public static PosterUrl Create(
-        string value
+        string posterUrl
     )
     {
-        string trimmedUrl = value?.Trim() ?? string.Empty;
-
-        if(string.IsNullOrWhiteSpace(trimmedUrl))
-        {
-            throw new InvalidMoviePosterUrlException(trimmedUrl);
-        }
+        Asserts.EnsureNotEmpty(posterUrl);
+        string trimmedUrl = posterUrl.Trim();
         return new PosterUrl(trimmedUrl);
     }
 }
