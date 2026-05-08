@@ -24,10 +24,12 @@ jobs:
 
     - name: Run unit tests
       run: dotnet test test/UnitTests/UnitTests.csproj \
+        --no-restore \
         --configuration Release \
         --verbosity normal
 
   coverage:
+    needs: unit-tests
     runs-on: ubuntu-latest
 
     steps:
@@ -44,6 +46,7 @@ jobs:
 
     - name: Run tests with coverage
       run: dotnet test test/UnitTests/UnitTests.csproj \
+        --no-restore \
         --configuration Release \
         /p:CollectCoverage=true \
         /p:CoverletOutputFormat=opencover \
