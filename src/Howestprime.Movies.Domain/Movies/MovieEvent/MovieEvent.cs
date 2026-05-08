@@ -120,7 +120,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
 
     private void EnsureMovieEventIsIn14Days()
     {
-        if(ShowTime.Value > DateTime.UtcNow.AddDays(14))
+        if(ShowTime.Value > DateTimeOffset.UtcNow.AddDays(14))
         {
           throw new ArgumentException(
             "Cannot book a movie event that is more than 14 days in the future.");

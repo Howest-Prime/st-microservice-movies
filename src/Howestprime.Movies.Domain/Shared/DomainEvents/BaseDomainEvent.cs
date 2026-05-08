@@ -10,5 +10,5 @@ public class BaseDomainEvent(
 ) : IDomainEvent
 {
     public string FQDN { get; private init; } = $"{companyName}.{boundedContext}.{aggregateName}.{eventName}";
-    public DateTime OccurredOn { get; private init; } = DateTime.UtcNow;
+    public DateTimeOffset OccurredOn { get; private init; } = DateTimeOffset.UtcNow;
 }

@@ -4,18 +4,18 @@ public sealed record BookingOpened(
     Guid BookingId,
     Guid MovieId,
     Guid RoomId,
-    DateTime ShowTime,
+    DateTimeOffset ShowTime,
     int StandardVisitors,
     int DiscountVisitors,
     IReadOnlyList<Booking> Bookings
 );
- 
 
- public sealed record Booking(
+
+public sealed record Booking(
     Guid BookingId,
     Guid MovieId,
     Guid RoomId,
-    DateTime ShowTime,
+    DateTimeOffset ShowTime,
     int StandardVisitors,
     int DiscountVisitors
 );

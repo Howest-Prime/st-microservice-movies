@@ -12,10 +12,10 @@ using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace Howestprime.Movies.Application.MovieEvents;
 
-public sealed record ScheduleMovieEventInput( 
+public sealed record ScheduleMovieEventInput(
     Guid MovieId,
     Guid RoomId,
-    DateTime ShowTime
+    DateTimeOffset ShowTime
 );
 
 public sealed record ScheduleMovieEventOutput(

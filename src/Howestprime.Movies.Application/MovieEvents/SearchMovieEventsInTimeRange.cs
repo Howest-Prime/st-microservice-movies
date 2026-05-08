@@ -6,8 +6,8 @@ using Howestprime.Movies.Application.Contracts.Ports;
 namespace Howestprime.Movies.Application.MovieEvents;
 
 public sealed record SearchMovieEventsInTimeRangeInput(
-    DateTime From,
-    DateTime To
+    DateTimeOffset From,
+    DateTimeOffset To
 );
 
 public sealed class SearchMovieEventsInTimeRange(

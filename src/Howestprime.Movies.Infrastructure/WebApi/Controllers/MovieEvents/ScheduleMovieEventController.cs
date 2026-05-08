@@ -11,7 +11,7 @@ namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
 public sealed record ScheduleMovieEventBody(
     Guid MovieId,
     Guid RoomId,
-    DateTime ShowTime
+    DateTimeOffset ShowTime
 );
 
 public sealed record ScheduleMovieEventRequest(

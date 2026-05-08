@@ -21,8 +21,8 @@ public static class GetHowestPrimeScheduleController
 {
     public static async Task<Results<Ok<IReadOnlyList<HowestPrimeScheduleResponse>>, NotFound>> Invoke([AsParameters] GetHowestPrimeScheduleRequest getHowestPrimeScheduleRequest)
     {
-        DateTime now = DateTime.UtcNow;
-        DateTime inTwoWeeks = now.AddDays(14);
+        DateTimeOffset now = DateTimeOffset.UtcNow;
+        DateTimeOffset inTwoWeeks = now.AddDays(14);
 
         Optional<IReadOnlyList<MovieEventData>> movieEvents = await getHowestPrimeScheduleRequest.UseCase.Execute(
             new SearchMovieEventsInTimeRangeInput(now, inTwoWeeks)

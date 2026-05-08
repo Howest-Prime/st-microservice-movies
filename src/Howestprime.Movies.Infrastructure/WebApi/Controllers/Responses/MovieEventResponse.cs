@@ -2,7 +2,7 @@ namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 
 public sealed record MovieEventResponse(
     Guid Id,
-    DateTime ShowTime,
+    DateTimeOffset ShowTime,
     int Capacity,
     MovieResponse Movie,
     RoomResponse Room

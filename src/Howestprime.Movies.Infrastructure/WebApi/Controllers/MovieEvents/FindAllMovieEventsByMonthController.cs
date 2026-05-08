@@ -20,7 +20,7 @@ public static class FindAllMovieEventsByMonthController
 {
     public static async Task<Results<Ok<IReadOnlyList<MovieEventResponse>>, NotFound>> Invoke([AsParameters] GetMovieEventsByMonthRequest request)
     {
-        (DateTime startOfMonth, DateTime endOfMonth) = GetMonthRange(request.Year, request.Month);
+        (DateTimeOffset startOfMonth, DateTimeOffset endOfMonth) = GetMonthRange(request.Year, request.Month);
 
         Optional<IReadOnlyList<MovieEventData>> movieEvents = await request.UseCase.Execute(
             new SearchMovieEventsInTimeRangeInput(startOfMonth, endOfMonth)
@@ -29,16 +29,15 @@ public static class FindAllMovieEventsByMonthController
         {
             return TypedResults.NotFound();
         }
-        
+
         return TypedResults.Ok(movieEvents.Value.ToMovieEventResponseList());
 
-        
     }
 
-    private static (DateTime Start, DateTime End) GetMonthRange(int year, int month)
+    private static (DateTimeOffset Start, DateTimeOffset End) GetMonthRange(int year, int month)
     {
-        DateTime start = new DateTime(year, month, 1, 0, 0, 0, DateTimeKind.Utc);
-        DateTime end = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59, DateTimeKind.Utc);
+        DateTimeOffset start = new DateTimeOffset(year, month, 1, 0, 0, 0, TimeSpan.Zero);
+        DateTimeOffset end = new DateTimeOffset(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59, TimeSpan.Zero);
 
         return (start, end);
     }
