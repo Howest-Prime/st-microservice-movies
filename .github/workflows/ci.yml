@@ -23,9 +23,10 @@ jobs:
       run: dotnet restore test/UnitTests/UnitTests.csproj
 
     - name: Run unit tests
-      run: dotnet test test/UnitTests/UnitTests.csproj \
-        --configuration Release \
-        --verbosity normal
+      run: |
+        dotnet test test/UnitTests/UnitTests.csproj \
+          --configuration Release \
+          --verbosity normal
 
   coverage:
     needs: unit-tests
@@ -44,14 +45,15 @@ jobs:
       run: dotnet restore test/UnitTests/UnitTests.csproj
 
     - name: Run tests with coverage
-      run: dotnet test test/UnitTests/UnitTests.csproj \
-        --configuration Release \
-        /p:CollectCoverage=true \
-        /p:CoverletOutputFormat=opencover \
-        /p:CoverletOutput=./coverage/ \
-        /p:Threshold=97 \
-        /p:ThresholdType=line \
-        '/p:Include="[Howestprime.Movies.Application]*,[Howestprime.Movies.Domain]*"'
+      run: |
+        dotnet test test/UnitTests/UnitTests.csproj \
+          --configuration Release \
+          /p:CollectCoverage=true \
+          /p:CoverletOutputFormat=opencover \
+          /p:CoverletOutput=./coverage/ \
+          /p:Threshold=97 \
+          /p:ThresholdType=line \
+          '/p:Include="[Howestprime.Movies.Application]*,[Howestprime.Movies.Domain]*"'
 
     - name: Upload coverage report
       uses: actions/upload-artifact@v4
