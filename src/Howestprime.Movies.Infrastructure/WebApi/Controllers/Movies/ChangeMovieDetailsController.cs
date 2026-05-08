@@ -2,6 +2,7 @@ using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
@@ -24,7 +25,7 @@ public sealed record ChangeMovieDetailsRequest(
 
 public static class ChangeMovieDetailsController
 {
-    public static async Task<IResult> Invoke([AsParameters] ChangeMovieDetailsRequest request)
+    public static async Task<Results<NoContent, BadRequest>> Invoke([AsParameters] ChangeMovieDetailsRequest request)
     {
         ChangeMovieDetailsInput input = new(
             request.MovieId,
@@ -39,7 +40,7 @@ public static class ChangeMovieDetailsController
 
         ChangeMovieDetailsOutput output = await request.UseCase.Execute(input);
 
-        return Results.Created($"/movies/{output.MovieId}", output);
+        return TypedResults.NoContent();
 
     }
 }

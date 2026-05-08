@@ -2,6 +2,7 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
@@ -19,7 +20,9 @@ public sealed record BookEventRequest(
 
 public  static class BookAMovieEventController
 {
-    public static async Task<IResult> Invoke([AsParameters] BookEventRequest request)
+    public static async Task<Results<Created, BadRequest>> Invoke(
+        [AsParameters] BookEventRequest request
+    )
     {
         BookMovieEventInput input = new BookMovieEventInput(
             request.MovieEventId,
@@ -29,6 +32,6 @@ public  static class BookAMovieEventController
 
         BookMovieEventOutput output = await request.UseCase.Execute(input);
         
-        return Results.Created($"/bookings/{output.BookingId}", output);
+        return TypedResults.Created($"/bookings/{output.BookingId}");
     }
 }

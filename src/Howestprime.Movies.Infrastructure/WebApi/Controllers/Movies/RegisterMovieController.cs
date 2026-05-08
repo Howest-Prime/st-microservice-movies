@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Application.Contracts.Ports;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
@@ -23,7 +24,7 @@ public sealed record RegisterMovieRequest(
 
 public  static class RegisterMovieController
 {
-    public static async Task<IResult> Invoke(
+    public static async Task<Results<Created, BadRequest>> Invoke(
         [AsParameters] RegisterMovieRequest request
     )
     {  
@@ -40,6 +41,6 @@ public  static class RegisterMovieController
 
         RegisterMovieOutput result = await request.UseCase.Execute(newMovie);
         
-        return Results.Created($"/movies/{result.Id}", result);
+        return TypedResults.Created($"/movies/{result.Id}");
     }
 }

@@ -3,6 +3,7 @@
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
@@ -19,7 +20,7 @@ public sealed record ScheduleMovieEventRequest(
 );
 public static class ScheduleMovieEventController
 {
-    public static async Task<IResult> Invoke(
+    public static async Task<Results<Created, BadRequest>> Invoke(
         [AsParameters] ScheduleMovieEventRequest request
     )
     {
@@ -28,8 +29,10 @@ public static class ScheduleMovieEventController
             request.Body.RoomId,
             request.Body.ShowTime
         );
+
         ScheduleMovieEventOutput output = await request.UseCase.Execute(input);
-        return Results.Created($"/movieevents/{output.MovieEventId}", output);
+        
+        return TypedResults.Created($"/movieevents/{output.MovieEventId}");
     }
 }
 

@@ -6,6 +6,7 @@ using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Howestprime.Movies.Infrastructure.WebApi.Extentions;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
@@ -18,7 +19,7 @@ public sealed record SearchMovieByTitleAndGenresRequest(
 
 public static class SearchMovieByTitleAndGenresController
 {
-    public static async Task<IResult> Invoke(
+    public static async Task<Results<Ok<IReadOnlyList<MovieResponse>>, NotFound>> Invoke(
         [AsParameters] SearchMovieByTitleAndGenresRequest request
     )
     {
@@ -26,10 +27,11 @@ public static class SearchMovieByTitleAndGenresController
 
         Optional<IReadOnlyList<MovieData>> result = await request.SearchMovieCatalogUseCase.Execute(input);
 
-        return Results.Ok(
-            result.HasValue
-                ? result.Value.ToMovieResponseList()
-                : Enumerable.Empty<MovieResponse>()
-    );
+        if (!result.HasValue)
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(result.Value.ToMovieResponseList());
     }
 }

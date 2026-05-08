@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Howestprime.Movies.Infrastructure.WebApi.Extentions;
 using Howestprime.Movies.Application.Contracts.Data.Movies;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
@@ -16,14 +18,18 @@ public sealed record FindMovieByIdRequest(
 
 public static class FindMovieByIdController
 {
-    public static async Task<IResult> Invoke([AsParameters] FindMovieByIdRequest request)
+    public static async Task<Results<Ok<MovieResponse>, NotFound>> Invoke([AsParameters] FindMovieByIdRequest request)
     {
         FindMovieByIdInput input = new(request.UserRole, request.MovieId);
+        
         Optional<MovieData> result = await request.UseCase.Execute(input);
 
-        return result.HasValue
-            ? Results.Ok(result.Value.ToMovieResponse())
-            : Results.NotFound();
+        if (!result.HasValue)
+        {
+            return TypedResults.NotFound();
+        }
+        
+        return TypedResults.Ok(result.Value.ToMovieResponse());
     }
 
 }
