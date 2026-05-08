@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace UnitTests.Domain.Movies.Movie.ValueObjects;
@@ -15,7 +14,7 @@ public sealed class MovieValueObjectsNullInputTests
         Action act = () => Actor.Create(value!);
 
         // Assert
-        Assert.Throws<InvalidActorException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -28,7 +27,7 @@ public sealed class MovieValueObjectsNullInputTests
         Action act = () => MovieTitle.Create(value!);
 
         // Assert
-        Assert.Throws<InvalidMovieTitleException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -41,7 +40,7 @@ public sealed class MovieValueObjectsNullInputTests
         Action act = () => MovieDescription.Create(value!);
 
         // Assert
-        Assert.Throws<InvalidMovieDescriptionException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -54,7 +53,7 @@ public sealed class MovieValueObjectsNullInputTests
         Action act = () => MovieGenre.Create(value!);
 
         // Assert
-        Assert.Throws<InvalidMovieGenreException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -67,6 +66,6 @@ public sealed class MovieValueObjectsNullInputTests
         Action act = () => PosterUrl.Create(value!);
 
         // Assert
-        Assert.Throws<InvalidMoviePosterUrlException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 }

@@ -1,9 +1,8 @@
 using Howestprime.Movies.Application.MovieEvents;
-using Howestprime.Movies.Application.MovieEvents.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
+using Howestprime.Movies.Shared.Exceptions;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.MovieEvents;
@@ -56,7 +55,7 @@ public sealed class CloseBookingTests : ApplicationTestBase
         Task act = _closeBooking.Execute(input);
 
         // Assert
-        await Assert.ThrowsAsync<InvalidBookingException>(() => act);
+        await Assert.ThrowsAsync<NotFoundException>(() => act);
     }
 
     [Fact]
@@ -76,7 +75,7 @@ public sealed class CloseBookingTests : ApplicationTestBase
         Task act = _closeBooking.Execute(new CloseBookingInput(bookingId.Value, "cancelled"));
 
         // Assert
-        await Assert.ThrowsAsync<InvalidCloseBookingReasonException>(() => act);
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
     }
 
     private static DateTime NextShowTime()

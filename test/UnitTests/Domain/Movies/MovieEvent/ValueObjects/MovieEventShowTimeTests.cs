@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
 namespace UnitTests.Domain.Movies.MovieEvent.ValueObjects;
@@ -30,7 +29,7 @@ public sealed class MovieEventShowTimeTests
         Action act = () => MovieEventShowTime.Create(showTime);
 
         // Assert
-        Assert.Throws<InvalidShowHourException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -43,7 +42,7 @@ public sealed class MovieEventShowTimeTests
         Action act = () => MovieEventShowTime.Create(showTime);
 
         // Assert
-        Assert.Throws<InvalidShowTimeException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     private static DateTime NextShowTimeAt(int hour)

@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace UnitTests.Domain.Movies.Movie.ValueObjects;
@@ -13,7 +12,7 @@ public sealed class MovieDescriptionTests
         Action act = () => MovieDescription.Create(description);
 
         // Act
-        InvalidMovieDescriptionException exception = Assert.Throws<InvalidMovieDescriptionException>(act);
+        ArgumentException exception = Assert.Throws<ArgumentException>(act);
 
         // Assert
         Assert.NotNull(exception);
@@ -27,7 +26,7 @@ public sealed class MovieDescriptionTests
         Action act = () => MovieDescription.Create(description);
 
         // Act
-        InvalidMovieDescriptionException exception = Assert.Throws<InvalidMovieDescriptionException>(act);
+        ArgumentException exception = Assert.Throws<ArgumentException>(act);
 
         // Assert
         Assert.NotNull(exception);

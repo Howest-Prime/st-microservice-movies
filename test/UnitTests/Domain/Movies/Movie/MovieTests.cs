@@ -1,6 +1,4 @@
-using Howestprime.Movies.Domain.Movies.Movie;
 using Howestprime.Movies.Domain.Movies.Movie.Events;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace UnitTests.Domain.Movies.Movie;
@@ -126,7 +124,7 @@ public sealed class MovieTests
         );
 
         // Act & Assert
-        Assert.Throws<InvalidMovieTitleException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -147,7 +145,7 @@ public sealed class MovieTests
         );
 
         // Act & Assert
-        Assert.Throws<InvalidMovieDescriptionException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -168,7 +166,7 @@ public sealed class MovieTests
         );
 
         // Act & Assert
-        Assert.Throws<InvalidMovieDurationException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -189,7 +187,7 @@ public sealed class MovieTests
         );
 
         // Act & Assert
-        Assert.Throws<InvalidMovieReleaseYearException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -210,7 +208,7 @@ public sealed class MovieTests
         );
 
         // Act & Assert
-        Assert.Throws<InvalidAgeRatingException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -220,7 +218,7 @@ public sealed class MovieTests
         string oversizedGenre = new('G', 51);
 
         // Act & Assert
-        Assert.Throws<InvalidMovieGenreException>(() => MovieGenre.Create(oversizedGenre));
+        Assert.Throws<ArgumentException>(() => MovieGenre.Create(oversizedGenre));
     }
 
     [Fact]
@@ -230,7 +228,7 @@ public sealed class MovieTests
         string whitespaceActor = "   ";
 
         // Act & Assert
-        Assert.Throws<InvalidActorException>(() => Actor.Create(whitespaceActor));
+        Assert.Throws<ArgumentException>(() => Actor.Create(whitespaceActor));
     }
 
     [Fact]
@@ -251,7 +249,7 @@ public sealed class MovieTests
         );
 
         // Act & Assert
-        Assert.Throws<InvalidMoviePosterUrlException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -685,7 +683,7 @@ public sealed class MovieTests
         string emptyGenre = "";
 
         // Act & Assert
-        Assert.Throws<InvalidMovieGenreException>(() => MovieGenre.Create(emptyGenre));
+        Assert.Throws<ArgumentException>(() => MovieGenre.Create(emptyGenre));
     }
 
     [Fact]
@@ -695,7 +693,7 @@ public sealed class MovieTests
         string emptyActor = "";
 
         // Act & Assert
-        Assert.Throws<InvalidActorException>(() => Actor.Create(emptyActor));
+        Assert.Throws<ArgumentException>(() => Actor.Create(emptyActor));
     }
 
     [Fact]
@@ -705,7 +703,7 @@ public sealed class MovieTests
         string emptyTitle = "";
 
         // Act & Assert
-        Assert.Throws<InvalidMovieTitleException>(() => MovieTitle.Create(emptyTitle));
+        Assert.Throws<ArgumentException>(() => MovieTitle.Create(emptyTitle));
     }
 
     [Fact]
@@ -715,7 +713,7 @@ public sealed class MovieTests
         string emptyDesc = "";
 
         // Act & Assert
-        Assert.Throws<InvalidMovieDescriptionException>(() => MovieDescription.Create(emptyDesc));
+        Assert.Throws<ArgumentException>(() => MovieDescription.Create(emptyDesc));
     }
 
     [Fact]
@@ -725,7 +723,7 @@ public sealed class MovieTests
         string emptyUrl = "";
 
         // Act & Assert
-        Assert.Throws<InvalidMoviePosterUrlException>(() => PosterUrl.Create(emptyUrl));
+        Assert.Throws<ArgumentException>(() => PosterUrl.Create(emptyUrl));
     }
 
     [Fact]
@@ -733,7 +731,7 @@ public sealed class MovieTests
     {
         // Arrange
         // Act & Assert
-        Assert.Throws<InvalidMovieDurationException>(() => MovieDuration.Create(-10));
+        Assert.Throws<ArgumentException>(() => MovieDuration.Create(-10));
     }
 
     [Fact]
@@ -743,7 +741,7 @@ public sealed class MovieTests
         int futureYear = DateTime.Now.Year + 1;
 
         // Act & Assert
-        Assert.Throws<InvalidMovieReleaseYearException>(() => MovieReleaseYear.Create(futureYear));
+        Assert.Throws<ArgumentException>(() => MovieReleaseYear.Create(futureYear));
     }
 
     [Fact]
@@ -775,6 +773,100 @@ public sealed class MovieTests
         Assert.NotEqual(movie1.Id, movie2.Id);
         Assert.Equal(guid1, movie1.Id.Value);
         Assert.Equal(guid2, movie2.Id.Value);
+    }
+
+    [Fact]
+    public void ChangeDetails_ShouldUpdateAllProperties()
+    {
+        // Arrange
+        Howestprime.Movies.Domain.Movies.Movie.Movie movie = CreateValidMovie();
+        MovieTitle newTitle = MovieTitle.Create("Updated Title");
+        MovieDescription newDescription = MovieDescription.Create("Updated description");
+        MovieReleaseYear newReleaseYear = MovieReleaseYear.Create(2023);
+        List<MovieGenre> newGenres = [MovieGenre.Create("Thriller")];
+        List<Actor> newActors = [Actor.Create("New Actor")];
+        AgeRating newAgeRating = AgeRating.From(18);
+        PosterUrl newPosterUrl = PosterUrl.Create("https://example.com/new.jpg");
+
+        // Act
+        movie.ChangeDetails(newTitle, newDescription, newReleaseYear, newGenres, newActors, newAgeRating, newPosterUrl);
+
+        // Assert
+        Assert.Equal(newTitle, movie.Title);
+        Assert.Equal(newDescription, movie.Description);
+        Assert.Equal(newReleaseYear, movie.ReleaseYear);
+        Assert.Equal(newAgeRating, movie.AgeRating);
+        Assert.Equal(newPosterUrl, movie.PosterUrl);
+        Assert.Single(movie.Genres);
+        Assert.Single(movie.Actors);
+    }
+
+    [Fact]
+    public void ChangeDetails_ShouldRaiseMovieDetailsChangedEvent()
+    {
+        // Arrange
+        Howestprime.Movies.Domain.Movies.Movie.Movie movie = CreateValidMovie();
+        movie.ClearDomainEvents();
+        MovieTitle newTitle = MovieTitle.Create("Changed");
+        MovieDescription newDescription = MovieDescription.Create("Changed description");
+        MovieReleaseYear newReleaseYear = MovieReleaseYear.Create(2021);
+        List<MovieGenre> newGenres = [MovieGenre.Create("Action"), MovieGenre.Create("Drama")];
+        List<Actor> newActors = [Actor.Create("Actor A"), Actor.Create("Actor B")];
+        AgeRating newAgeRating = AgeRating.From(12);
+        PosterUrl newPosterUrl = PosterUrl.Create("https://example.com/changed.jpg");
+
+        // Act
+        movie.ChangeDetails(newTitle, newDescription, newReleaseYear, newGenres, newActors, newAgeRating, newPosterUrl);
+
+        // Assert
+        MovieDetailsChanged domainEvent = Assert.IsType<MovieDetailsChanged>(Assert.Single(movie.DomainEvents));
+        Assert.Equal(movie.Id, domainEvent.MovieId);
+        Assert.Equal(newTitle, domainEvent.Title);
+        Assert.Equal(newDescription, domainEvent.Description);
+        Assert.Equal(newReleaseYear, domainEvent.ReleaseYear);
+        Assert.Equal(newAgeRating, domainEvent.AgeRating);
+        Assert.Equal(newPosterUrl, domainEvent.PosterUrl);
+        Assert.Equal(2, domainEvent.Genres.Count);
+        Assert.Equal(2, domainEvent.Actors.Count);
+    }
+
+    [Fact]
+    public void ChangeDetails_ShouldReplaceGenresAndActors()
+    {
+        // Arrange
+        Howestprime.Movies.Domain.Movies.Movie.Movie movie = CreateValidMovie();
+        List<MovieGenre> newGenres = [];
+        List<Actor> newActors = [];
+
+        // Act
+        movie.ChangeDetails(
+            MovieTitle.Create("Title"),
+            MovieDescription.Create("Desc"),
+            MovieReleaseYear.Create(2020),
+            newGenres,
+            newActors,
+            AgeRating.From(0),
+            PosterUrl.Create("https://example.com/x.jpg")
+        );
+
+        // Assert
+        Assert.Empty(movie.Genres);
+        Assert.Empty(movie.Actors);
+    }
+
+    private static Howestprime.Movies.Domain.Movies.Movie.Movie CreateValidMovie()
+    {
+        return Howestprime.Movies.Domain.Movies.Movie.Movie.Create(
+            new MovieId(Guid.NewGuid()),
+            MovieTitle.Create("Valid Title"),
+            MovieDescription.Create("Valid description"),
+            [MovieGenre.Create("Drama")],
+            [Actor.Create("Valid Actor")],
+            MovieReleaseYear.Create(2020),
+            MovieDuration.Create(100),
+            AgeRating.From(12),
+            PosterUrl.Create("https://example.com/valid.jpg")
+        );
     }
 
     [Fact]

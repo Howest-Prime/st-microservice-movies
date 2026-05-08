@@ -1,5 +1,4 @@
 using Howestprime.Movies.Domain.Movies.MovieEvent;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
 namespace UnitTests.Domain.Movies.MovieEvent;
@@ -78,6 +77,6 @@ public sealed class BookingTests
         Action act = () => booking.Close(PaymentStatus.Success);
 
         // Assert
-        Assert.Throws<BookingAlreadyClosedException>(act);
+        Assert.Throws<InvalidOperationException>(act);
     }
 }

@@ -1,6 +1,5 @@
 using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Domain.Movies.Movie;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 using Howestprime.Movies.Domain.Movies.Movie.Repositories;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 using UnitTests.Application.Shared;
@@ -62,6 +61,6 @@ public sealed class RegisterMovieTests : ApplicationTestBase
         Task act = _registerMovie.Execute(input);
 
         // Assert
-        await Assert.ThrowsAsync<InvalidMovieTitleException>(() => act);
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
     }
 }

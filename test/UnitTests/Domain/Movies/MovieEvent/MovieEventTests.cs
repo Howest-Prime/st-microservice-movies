@@ -1,8 +1,7 @@
-using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.Events;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
+using Howestprime.Movies.Shared.Exceptions;
 
 namespace UnitTests.Domain.Movies.MovieEvent;
 
@@ -69,7 +68,7 @@ public sealed class MovieEventTests
         Action act = () => movieEvent.Book(standardVisitors: 2, discountVisitors: 1);
 
         // Assert
-        Assert.Throws<MovieEventCapacityExceededException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -83,7 +82,7 @@ public sealed class MovieEventTests
         Action act = () => movieEvent.Book(standardVisitors: 1, discountVisitors: 0);
 
         // Assert
-        Assert.Throws<MovieEventTooFarInFutureException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     [Fact]
@@ -113,7 +112,7 @@ public sealed class MovieEventTests
         Action act = () => movieEvent.CloseBooking(new BookingId(Guid.NewGuid()), PaymentStatus.Success);
 
         // Assert
-        Assert.Throws<InvalidBookingException>(act);
+        Assert.Throws<NotFoundException>(act);
     }
 
     [Fact]
@@ -131,19 +130,7 @@ public sealed class MovieEventTests
         Assert.Equal(newMovieId, movieEvent.MovieId);
     }
 
-    [Fact]
-    public void UpdateMovie_WithNonGuid_ShouldThrow()
-    {
-        // Arrange
-        Howestprime.Movies.Domain.Movies.MovieEvent.MovieEvent movieEvent =
-            CreateMovieEvent(Guid.NewGuid(), Guid.NewGuid(), MovieEventShowTime.Create(ShowTimeInDays(1)), capacity: 10);
-
-        // Act
-        Action act = () => movieEvent.UpdateMovie("not-a-guid");
-
-        // Assert
-        Assert.Throws<InvalidMovieUpdateException>(act);
-    }
+  
 
     private static Howestprime.Movies.Domain.Movies.MovieEvent.MovieEvent CreateMovieEvent(
         Guid movieId,

@@ -2,7 +2,7 @@ using Aornis;
 using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
-using Howestprime.Movies.Application.Movies.Exceptions;
+using Howestprime.Movies.Shared.Exceptions;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.Movies;
@@ -49,7 +49,7 @@ public sealed class FindMovieByIdTests
         Task act = useCase.Execute(new FindMovieByIdInput("Admin", Guid.NewGuid()));
 
         // Assert
-        await Assert.ThrowsAsync<MovieNotFoundException>(() => act);
+        await Assert.ThrowsAsync<NotFoundException>(() => act);
     }
 
     private sealed class FakeSearchMovieCatalogQuery(IReadOnlyList<MovieData> movies) : ISearchMovieCatalogQuery

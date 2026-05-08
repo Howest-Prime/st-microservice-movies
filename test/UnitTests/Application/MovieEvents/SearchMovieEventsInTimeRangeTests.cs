@@ -4,7 +4,6 @@ using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Howestprime.Movies.Application.Contracts.Data.Room;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.MovieEvents;
-using Howestprime.Movies.Domain.Movies.MovieEvent.Exceptions;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.MovieEvents;
@@ -63,7 +62,7 @@ public sealed class SearchMovieEventsInTimeRangeTests
         Action act = () => useCase.Execute(new SearchMovieEventsInTimeRangeInput(from, to));
 
         // Assert
-        Assert.Throws<InvalidTimeRangeException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 
     private sealed class FakeMovieEventQuery(IReadOnlyList<MovieEventData> movieEvents) : IMovieEventQuery

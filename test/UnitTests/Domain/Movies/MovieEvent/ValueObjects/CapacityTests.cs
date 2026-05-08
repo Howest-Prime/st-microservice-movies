@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
 namespace UnitTests.Domain.Movies.MovieEvent.ValueObjects;
@@ -24,6 +23,6 @@ public sealed class CapacityTests
         Action act = () => Capacity.Create(value);
 
         // Assert
-        Assert.Throws<InvalidCapacityException>(act);
+        Assert.Throws<ArgumentException>(act);
     }
 }

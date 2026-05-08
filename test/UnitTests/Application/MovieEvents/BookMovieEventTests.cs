@@ -1,9 +1,8 @@
 using Howestprime.Movies.Application.MovieEvents;
-using Howestprime.Movies.Application.MovieEvents.Exceptions;
-using Howestprime.Movies.Domain.MovieEvent.Exceptions;
 using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
+using Howestprime.Movies.Shared.Exceptions;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.MovieEvents;
@@ -50,7 +49,7 @@ public sealed class BookMovieEventTests : ApplicationTestBase
         Task act = _bookMovieEvent.Execute(input);
 
         // Assert
-        await Assert.ThrowsAsync<MovieEventNotFoundException>(() => act);
+        await Assert.ThrowsAsync<NotFoundException>(() => act);
     }
 
     [Fact]
@@ -70,7 +69,7 @@ public sealed class BookMovieEventTests : ApplicationTestBase
         Task act = _bookMovieEvent.Execute(input);
 
         // Assert
-        await Assert.ThrowsAsync<MovieEventCapacityExceededException>(() => act);
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
     }
 
     private static DateTime NextShowTime()

@@ -2,7 +2,6 @@ using Aornis;
 using Howestprime.Movies.Application.Contracts.Data.Movies;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.Movies;
@@ -57,7 +56,7 @@ public sealed class SearchMovieCatalogTests
         Task act = useCase.Execute(new SearchMovieCatalogInput("Admin", null, [" "]));
 
         // Assert
-        await Assert.ThrowsAsync<InvalidMovieGenreException>(() => act);
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
     }
 
     private sealed class FakeSearchMovieCatalogQuery(IReadOnlyList<MovieData> movies) : ISearchMovieCatalogQuery

@@ -1,8 +1,8 @@
 using Howestprime.Movies.Application.Movies;
-using Howestprime.Movies.Application.Movies.Exceptions;
 using Howestprime.Movies.Domain.Movies.Movie;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
+using Howestprime.Movies.Shared.Exceptions;
 using UnitTests.Application.Shared;
 
 namespace UnitTests.Application.Movies;
@@ -73,6 +73,6 @@ public sealed class ChangeMovieDetailsTests : ApplicationTestBase
         Task act = _changeMovieDetails.Execute(input);
 
         // Assert
-        await Assert.ThrowsAsync<MovieNotFoundException>(() => act);
+        await Assert.ThrowsAsync<NotFoundException>(() => act);
     }
 }

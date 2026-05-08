@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.Movies.Movie.Exceptions;
 using Howestprime.Movies.Domain.Movies.Movie.ValueObjects;
 
 namespace UnitTests.Domain.Movies.Movie.ValueObjects;
@@ -13,7 +12,7 @@ public sealed class MovieReleaseYearTests
         Action act = () => MovieReleaseYear.Create(year);
 
         // Act
-        InvalidMovieReleaseYearException exception = Assert.Throws<InvalidMovieReleaseYearException>(act);
+        ArgumentException exception = Assert.Throws<ArgumentException>(act);
 
         // Assert
         Assert.NotNull(exception);
@@ -28,7 +27,7 @@ public sealed class MovieReleaseYearTests
         Action act = () => MovieReleaseYear.Create(invalidYear);
 
         // Act
-        InvalidMovieReleaseYearException exception = Assert.Throws<InvalidMovieReleaseYearException>(act);
+        ArgumentException exception = Assert.Throws<ArgumentException>(act);
 
         // Assert
         Assert.NotNull(exception);
