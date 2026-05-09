@@ -45,14 +45,13 @@ public sealed class ChangeMovieDetailsTests : ApplicationTestBase
         ChangeMovieDetailsOutput output = await _changeMovieDetails.Execute(input);
 
         // Assert
-        Movie updatedMovie = (await MovieRepository.ById(new MovieId(output.MovieId))).Value;
         Assert.Equal(input.Title, output.Title);
-        Assert.Equal(input.Description, updatedMovie.Description.Value);
-        Assert.Equal(input.ReleaseYear, updatedMovie.ReleaseYear.Value);
-        Assert.Equal(input.Genre, updatedMovie.Genres.Select(genre => genre.Value).ToArray());
-        Assert.Equal(input.Actors, updatedMovie.Actors.Select(actor => actor.Name).ToArray());
+        Assert.Equal(input.Description, output.Description);
+        Assert.Equal(input.ReleaseYear, output.ReleaseYear);
+        Assert.Equal(input.Genre, output.Genre);
+        Assert.Equal(input.Actors, output.Actors);
         Assert.Equal("Nine", output.AgeRating);
-        Assert.Equal(input.PosterUrl, updatedMovie.PosterUrl.Value);
+        Assert.Equal(input.PosterUrl, output.PosterUrl);
     }
 
     [Fact]

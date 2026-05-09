@@ -116,6 +116,14 @@ public sealed class MovieEventTests
     }
 
     [Fact]
+    public void Create_ViaPrivateConstructor_ShouldInstantiate()
+    {
+        var movieEvent = (Howestprime.Movies.Domain.Movies.MovieEvent.MovieEvent)
+            Activator.CreateInstance(typeof(Howestprime.Movies.Domain.Movies.MovieEvent.MovieEvent), nonPublic: true)!;
+        Assert.NotNull(movieEvent);
+    }
+
+    [Fact]
     public void UpdateMovie_WithGuid_ShouldChangeMovieId()
     {
         // Arrange

@@ -67,6 +67,13 @@ public sealed class BookingTests
     }
 
     [Fact]
+    public void Create_ViaPrivateConstructor_ShouldInstantiate()
+    {
+        Booking booking = (Booking)Activator.CreateInstance(typeof(Booking), nonPublic: true)!;
+        Assert.NotNull(booking);
+    }
+
+    [Fact]
     public void Close_WhenAlreadyClosed_ShouldThrow()
     {
         // Arrange

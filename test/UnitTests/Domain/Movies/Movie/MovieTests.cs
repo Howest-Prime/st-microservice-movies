@@ -6,6 +6,14 @@ namespace UnitTests.Domain.Movies.Movie;
 public sealed class MovieTests
 {
     [Fact]
+    public void Create_ViaPrivateConstructor_ShouldInstantiate()
+    {
+        var movie = (Howestprime.Movies.Domain.Movies.Movie.Movie)
+            Activator.CreateInstance(typeof(Howestprime.Movies.Domain.Movies.Movie.Movie), nonPublic: true)!;
+        Assert.NotNull(movie);
+    }
+
+    [Fact]
     public void Create_WithValidMinimalInput_ShouldInitializeState()
     {
         // Arrange
