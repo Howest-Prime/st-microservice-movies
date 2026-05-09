@@ -46,10 +46,10 @@ public sealed class ScheduleMovieEvent(
             return new ScheduleMovieEventOutput(existingMovieEvent.Id.Value);
         }
     
-        Movie movie = (await uow.Repo<IMovieRepository>().ById(movieId))
+        Movie? movie = (await uow.Repo<IMovieRepository>().ById(movieId))
                         .OrElseThrow(() => new NotFoundException($"Movie with id {input.MovieId} not found."));
 
-        Room room = (await uow.Repo<IRoomRepository>().ById(roomId))
+        Room? room = (await uow.Repo<IRoomRepository>().ById(roomId))
                         .OrElseThrow(() => new NotFoundException($"Room with id {input.RoomId} not found."));
 
         MovieEvent newMovieEvent = MovieEvent.Create(

@@ -19,18 +19,13 @@ public sealed record SearchMovieByTitleAndGenresRequest(
 
 public static class SearchMovieByTitleAndGenresController
 {
-    public static async Task<Results<Ok<SearchMovieCatalogResponse>, NotFound>> Invoke(
+    public static async Task<Results<Ok<SearchMovieCatalogResponse>, BadRequest>> Invoke(
         [AsParameters] SearchMovieByTitleAndGenresRequest request
     )
     {
         SearchMovieCatalogInput input = new SearchMovieCatalogInput(request.UserRole, request.Title, request.Genres);
 
         Optional<IReadOnlyList<MovieData>> result = await request.SearchMovieCatalogUseCase.Execute(input);
-
-        if (!result.HasValue)
-        {
-            return TypedResults.NotFound();
-        }
 
         return TypedResults.Ok(
              new SearchMovieCatalogResponse(result.Value.ToMovieResponseList())

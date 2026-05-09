@@ -25,7 +25,7 @@ public sealed class BookMovieEvent(
     public async Task<BookMovieEventOutput> Execute(BookMovieEventInput input)
     {
         MovieEventId movieEventId = EntityId.New<MovieEventId>(input.MovieEventId);
-        MovieEvent movieEvent = (await uow.Repo<IMovieEventRepository>().ById(movieEventId))
+        MovieEvent? movieEvent = (await uow.Repo<IMovieEventRepository>().ById(movieEventId))
                                 .OrElseThrow(()=> new NotFoundException($"Movie event with id {movieEventId.Value} not found."));
         
         BookingId bookingId = movieEvent.Book(input.StandardVisitors, input.DiscountVisitors);

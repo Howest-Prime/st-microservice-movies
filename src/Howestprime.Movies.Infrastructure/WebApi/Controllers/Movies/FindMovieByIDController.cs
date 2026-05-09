@@ -18,17 +18,12 @@ public sealed record FindMovieByIdRequest(
 
 public static class FindMovieByIdController
 {
-    public static async Task<Results<Ok<MovieResponse>, NotFound>> Invoke([AsParameters] FindMovieByIdRequest request)
+    public static async Task<Results<Ok<MovieResponse>, BadRequest>> Invoke([AsParameters] FindMovieByIdRequest request)
     {
         FindMovieByIdInput input = new(request.UserRole, request.MovieId);
         
         Optional<MovieData> result = await request.UseCase.Execute(input);
-
-        if (!result.HasValue)
-        {
-            return TypedResults.NotFound();
-        }
-        
+ 
         return TypedResults.Ok(result.Value.ToMovieResponse());
     }
 

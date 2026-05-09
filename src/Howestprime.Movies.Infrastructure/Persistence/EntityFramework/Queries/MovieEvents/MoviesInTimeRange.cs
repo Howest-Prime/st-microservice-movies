@@ -17,12 +17,11 @@ public sealed class MoviesInTimeRange(QueryDbContext context) : IMovieEventQuery
             .Include(me => me.Room)
             .AsNoTracking();
 
-        IReadOnlyList<MovieEventData> results = await query
+        IReadOnlyList<MovieEventData>? results = await query
             .Where(filter ?? (me => true))
             .ToListAsync();
 
-        return results.Count > 0
-            ? Optional.Of(results)
-            : Optional.Empty;
+        return Optional.Of(results);
+
     }
 }

@@ -19,7 +19,7 @@ public sealed record GetHowestPrimeScheduleRequest(
 
 public static class GetHowestPrimeScheduleController
 {
-    public static async Task<Results<Ok<IReadOnlyList<HowestPrimeScheduleResponse>>, NotFound>> Invoke([AsParameters] GetHowestPrimeScheduleRequest getHowestPrimeScheduleRequest)
+    public static async Task<Results<Ok<IReadOnlyList<HowestPrimeScheduleResponse>>, BadRequest>> Invoke([AsParameters] GetHowestPrimeScheduleRequest getHowestPrimeScheduleRequest)
     {
         DateTimeOffset now = DateTimeOffset.UtcNow;
         DateTimeOffset inTwoWeeks = now.AddDays(14);
@@ -27,11 +27,6 @@ public static class GetHowestPrimeScheduleController
         Optional<IReadOnlyList<MovieEventData>> movieEvents = await getHowestPrimeScheduleRequest.UseCase.Execute(
             new SearchMovieEventsInTimeRangeInput(now, inTwoWeeks)
         );
-
-        if (!movieEvents.HasValue)
-        {
-            return TypedResults.NotFound();
-        }
 
         return TypedResults.Ok(movieEvents.Value.ToHowestPrimeScheduleResponseList());
     }

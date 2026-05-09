@@ -18,17 +18,13 @@ public sealed record GetMovieEventsByMonthRequest(
 
 public static class FindAllMovieEventsByMonthController
 {
-    public static async Task<Results<Ok<IReadOnlyList<MovieEventResponse>>, NotFound>> Invoke([AsParameters] GetMovieEventsByMonthRequest request)
+    public static async Task<Results<Ok<IReadOnlyList<MovieEventResponse>>, BadRequest>> Invoke([AsParameters] GetMovieEventsByMonthRequest request)
     {
         (DateTimeOffset startOfMonth, DateTimeOffset endOfMonth) = GetMonthRange(request.Year, request.Month);
 
         Optional<IReadOnlyList<MovieEventData>> movieEvents = await request.UseCase.Execute(
             new SearchMovieEventsInTimeRangeInput(startOfMonth, endOfMonth)
         );
-        if (!movieEvents.HasValue)
-        {
-            return TypedResults.NotFound();
-        }
 
         return TypedResults.Ok(movieEvents.Value.ToMovieEventResponseList());
 

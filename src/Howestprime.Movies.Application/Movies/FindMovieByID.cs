@@ -17,7 +17,7 @@ public sealed class FindMovieById(
     {
         await authorizationService.Authorize(input.Role, nameof(FindMovieById));
 
-        IReadOnlyList<MovieData> movies = 
+        IReadOnlyList<MovieData>? movies = 
                     (await moviesQuery.Fetch(MovieDataFilter.ById(input.MovieId)))
                     .OrElseThrow(() => new NotFoundException($"Movie with id {input.MovieId} not found."));
 

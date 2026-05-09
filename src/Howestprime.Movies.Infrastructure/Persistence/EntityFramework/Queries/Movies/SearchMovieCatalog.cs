@@ -21,10 +21,8 @@ public sealed class SearchMovieCatalog(QueryDbContext context) : ISearchMovieCat
         IQueryable<MovieData> filteredQuery = query
             .Where(filter ?? (m => true));
 
-        IReadOnlyList<MovieData> results = await filteredQuery.ToListAsync();
+        IReadOnlyList<MovieData>? results = await filteredQuery.ToListAsync();
 
-        return results.Count > 0
-            ? Optional.Of(results)
-            : Optional.Empty;
+        return Optional.Of(results);
     }
 }
