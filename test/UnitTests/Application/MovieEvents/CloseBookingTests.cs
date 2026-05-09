@@ -19,6 +19,10 @@ public sealed class CloseBookingTests : ApplicationTestBase
     [Theory]
     [InlineData("payment successful", PaymentStatus.Success, 1)]
     [InlineData("payment failed", PaymentStatus.Failed, 0)]
+    [InlineData("PAYMENT SUCCESSFUL", PaymentStatus.Success, 1)]
+    [InlineData("PAYMENT FAILED", PaymentStatus.Failed, 0)]
+    [InlineData("Payment Successful", PaymentStatus.Success, 1)]
+    [InlineData("Payment Failed", PaymentStatus.Failed, 0)]
     public async Task Execute_WithValidReason_ShouldCloseBooking(
         string reason,
         PaymentStatus expectedPaymentStatus,

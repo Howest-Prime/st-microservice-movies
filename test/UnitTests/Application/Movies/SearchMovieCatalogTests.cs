@@ -47,6 +47,65 @@ public sealed class SearchMovieCatalogTests
     }
 
     [Fact]
+    public async Task Execute_WithNullTitleAndGenre_ShouldReturnAllMovies()
+    {
+        // Arrange
+        MovieData inception = new()
+        {
+            Id = Guid.NewGuid(),
+            Title = "Inception",
+            Genres = [new GenreData { Value = "Sci-Fi" }]
+        };
+        MovieData drama = inception with { Id = Guid.NewGuid(), Title = "A Quiet Drama", Genres = [new GenreData { Value = "Drama" }] };
+        SearchMovieCatalog useCase = new(new FakeSearchMovieCatalogQuery([inception, drama]), new FakeAuthorizationService());
+
+        // Act
+        Optional<IReadOnlyList<MovieData>> result = await useCase.Execute(
+            new SearchMovieCatalogInput("Admin", null, null));
+
+        // Assert
+        Assert.True(result.HasValue);
+        Assert.Equal(2, result.Value.Count);
+    }
+
+    [Fact]
+    public async Task Execute_WithOnlyTitleFilter_ShouldReturnMatchingMovies()
+    {
+        // Arrange
+        MovieData inception = new()
+        {
+            Id = Guid.NewGuid(),
+            Title = "Inception",
+            Genres = [new GenreData { Value = "Sci-Fi" }]
+        };
+        MovieData drama = inception with { Id = Guid.NewGuid(), Title = "A Quiet Drama", Genres = [new GenreData { Value = "Drama" }] };
+        SearchMovieCatalog useCase = new(new FakeSearchMovieCatalogQuery([inception, drama]), new FakeAuthorizationService());
+
+        // Act
+        Optional<IReadOnlyList<MovieData>> result = await useCase.Execute(
+            new SearchMovieCatalogInput("Admin", "incep", null));
+
+        // Assert
+        Assert.True(result.HasValue);
+        MovieData movie = Assert.Single(result.Value);
+        Assert.Equal(inception.Id, movie.Id);
+    }
+
+    [Fact]
+    public async Task Execute_WithNoMatchingMovies_ShouldReturnEmpty()
+    {
+        // Arrange
+        SearchMovieCatalog useCase = new(new FakeSearchMovieCatalogQuery([]), new FakeAuthorizationService());
+
+        // Act
+        Optional<IReadOnlyList<MovieData>> result = await useCase.Execute(
+            new SearchMovieCatalogInput("Admin", "NonExistent", null));
+
+        // Assert
+        Assert.False(result.HasValue);
+    }
+
+    [Fact]
     public async Task Execute_WithInvalidGenre_ShouldThrow()
     {
         // Arrange

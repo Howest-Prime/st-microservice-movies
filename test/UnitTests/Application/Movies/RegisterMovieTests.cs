@@ -63,4 +63,88 @@ public sealed class RegisterMovieTests : ApplicationTestBase
         // Assert
         await Assert.ThrowsAsync<ArgumentException>(() => act);
     }
+
+    [Fact]
+    public async Task Execute_WithEmptyDescription_ShouldThrow()
+    {
+        // Arrange
+        RegisterMovieInput input = new(
+            "Inception",
+            string.Empty,
+            148,
+            ["Sci-Fi"],
+            2010,
+            ["Leonardo DiCaprio"],
+            12,
+            "https://example.com/inception.jpg");
+
+        // Act
+        Task act = _registerMovie.Execute(input);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
+    }
+
+    [Fact]
+    public async Task Execute_WithZeroDuration_ShouldThrow()
+    {
+        // Arrange
+        RegisterMovieInput input = new(
+            "Inception",
+            "A skilled thief steals corporate secrets through dream-sharing technology.",
+            0,
+            ["Sci-Fi"],
+            2010,
+            ["Leonardo DiCaprio"],
+            12,
+            "https://example.com/inception.jpg");
+
+        // Act
+        Task act = _registerMovie.Execute(input);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
+    }
+
+    [Fact]
+    public async Task Execute_WithInvalidReleaseYear_ShouldThrow()
+    {
+        // Arrange
+        RegisterMovieInput input = new(
+            "Inception",
+            "A skilled thief steals corporate secrets through dream-sharing technology.",
+            148,
+            ["Sci-Fi"],
+            1800,
+            ["Leonardo DiCaprio"],
+            12,
+            "https://example.com/inception.jpg");
+
+        // Act
+        Task act = _registerMovie.Execute(input);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
+    }
+
+    [Fact]
+    public async Task Execute_WithInvalidAgeRating_ShouldThrow()
+    {
+        // Arrange
+        RegisterMovieInput input = new(
+            "Inception",
+            "A skilled thief steals corporate secrets through dream-sharing technology.",
+            148,
+            ["Sci-Fi"],
+            2010,
+            ["Leonardo DiCaprio"],
+            5,
+            "https://example.com/inception.jpg");
+
+        // Act
+        Task act = _registerMovie.Execute(input);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
+    }
 }

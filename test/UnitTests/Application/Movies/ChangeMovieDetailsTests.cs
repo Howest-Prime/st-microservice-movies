@@ -75,4 +75,36 @@ public sealed class ChangeMovieDetailsTests : ApplicationTestBase
         // Assert
         await Assert.ThrowsAsync<NotFoundException>(() => act);
     }
+
+    [Fact]
+    public async Task Execute_WithInvalidTitle_ShouldThrow()
+    {
+        // Arrange
+        Movie movie = Movie.Create(
+            EntityId.New<MovieId>(),
+            MovieTitle.Create("Inception"),
+            MovieDescription.Create("A skilled thief steals corporate secrets through dream-sharing technology."),
+            [MovieGenre.Create("Sci-Fi")],
+            [Actor.Create("Leonardo DiCaprio")],
+            MovieReleaseYear.Create(2010),
+            MovieDuration.Create(148),
+            AgeRating.From(12),
+            PosterUrl.Create("https://example.com/inception.jpg"));
+        await MovieRepository.Save(movie);
+        ChangeMovieDetailsInput input = new(
+            movie.Id.Value,
+            string.Empty,
+            "Explorers travel through a wormhole in space.",
+            2014,
+            ["Sci-Fi"],
+            ["Matthew McConaughey"],
+            9,
+            "https://example.com/interstellar.jpg");
+
+        // Act
+        Task act = _changeMovieDetails.Execute(input);
+
+        // Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => act);
+    }
 }

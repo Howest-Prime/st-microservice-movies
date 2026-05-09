@@ -53,6 +53,31 @@ public sealed class BookMovieEventTests : ApplicationTestBase
     }
 
     [Fact]
+    public async Task Execute_WithMultipleBookings_ShouldAccumulateVisitors()
+    {
+        // Arrange
+        MovieEvent movieEvent = MovieEvent.Create(
+            EntityId.New<MovieEventId>(),
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            MovieEventShowTime.Create(NextShowTime()),
+            Capacity.Create(10));
+        await MovieEventRepository.Save(movieEvent);
+        BookMovieEventInput firstInput = new(movieEvent.Id.Value, StandardVisitors: 2, DiscountVisitors: 1);
+        BookMovieEventInput secondInput = new(movieEvent.Id.Value, StandardVisitors: 1, DiscountVisitors: 0);
+
+        // Act
+        BookMovieEventOutput firstOutput = await _bookMovieEvent.Execute(firstInput);
+        BookMovieEventOutput secondOutput = await _bookMovieEvent.Execute(secondInput);
+
+        // Assert
+        MovieEvent updatedMovieEvent = (await MovieEventRepository.ById(movieEvent.Id)).Value;
+        Assert.Equal(2, updatedMovieEvent.Bookings.Count);
+        Assert.Equal(4, updatedMovieEvent.Visitors);
+        Assert.NotEqual(firstOutput.BookingId, secondOutput.BookingId);
+    }
+
+    [Fact]
     public async Task Execute_WhenCapacityExceeded_ShouldThrow()
     {
         // Arrange
