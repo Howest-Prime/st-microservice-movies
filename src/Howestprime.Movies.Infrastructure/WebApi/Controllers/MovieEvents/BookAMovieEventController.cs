@@ -13,7 +13,7 @@ public sealed record BookEventRequestBody(
 );
 
 public sealed record BookEventRequest(
-    [FromQuery] Guid MovieEventId,
+    [FromRoute] Guid MovieEventId,
     [FromBody] BookEventRequestBody Body,
     [FromServices] IUseCase<BookMovieEventInput, BookMovieEventOutput> UseCase
 );
