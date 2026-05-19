@@ -17,7 +17,7 @@ public sealed record MovieDuration : ValueObject
         int movieDuration
     )
     {
-        Asserts.EnsureGreaterThan(movieDuration, 0);
+        Asserts.EnsureGreaterThan(movieDuration, 0, nameof(movieDuration));
         return new MovieDuration(movieDuration);
     }
 }

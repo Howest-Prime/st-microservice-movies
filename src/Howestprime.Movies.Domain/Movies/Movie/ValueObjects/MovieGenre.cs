@@ -16,11 +16,11 @@ public sealed record MovieGenre : ValueObject
     }
 
     public static MovieGenre Create(
-        string genre
+        string movieGenre
     )
     {
-        Asserts.EnsureNotEmpty(genre);
-        string trimmedGenre = genre.Trim();
+        Asserts.EnsureNotEmpty(movieGenre, nameof(movieGenre));
+        string trimmedGenre = movieGenre.Trim();
         if (trimmedGenre.Length > MAX_LENGTH)
         {
             throw new ArgumentException($"Value cannot exceed {MAX_LENGTH} characters.");

@@ -16,11 +16,11 @@ public sealed record MovieReleaseYear : ValueObject
     }
 
     public static MovieReleaseYear Create(
-        int value
+        int movieReleaseYear
     )
     {
-        EnsureValidMovieReleaseYear(value);
-        return new MovieReleaseYear(value);
+        EnsureValidMovieReleaseYear(movieReleaseYear);
+        return new MovieReleaseYear(movieReleaseYear);
     }
 
     private static void EnsureValidMovieReleaseYear(int year)

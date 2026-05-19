@@ -19,7 +19,7 @@ public sealed record MovieTitle : ValueObject
         string movieTitle
     )
     {
-        Asserts.EnsureNotEmpty(movieTitle);
+        Asserts.EnsureNotEmpty(movieTitle, nameof(movieTitle));
         string trimmedValue = movieTitle.Trim();
         if (trimmedValue.Length > MAX_LENGTH)
         {

@@ -17,7 +17,7 @@ public sealed record PosterUrl : ValueObject
         string posterUrl
     )
     {
-        Asserts.EnsureNotEmpty(posterUrl);
+        Asserts.EnsureNotEmpty(posterUrl, nameof(posterUrl));
         string trimmedUrl = posterUrl.Trim();
         return new PosterUrl(trimmedUrl);
     }

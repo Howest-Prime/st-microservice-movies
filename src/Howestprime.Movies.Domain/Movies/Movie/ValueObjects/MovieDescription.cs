@@ -16,14 +16,14 @@ public sealed record MovieDescription : ValueObject
     }
 
     public static MovieDescription Create(
-        string description
+        string movieDescription
     )
     {
-        Asserts.EnsureNotEmpty(description, nameof(description));
-        if (description.Length > MAX_LENGTH)
+        Asserts.EnsureNotEmpty(movieDescription, nameof(movieDescription));
+        if (movieDescription.Length > MAX_LENGTH)
         {
             throw new ArgumentException($"Value cannot exceed {MAX_LENGTH} characters.");
         }
-        return new MovieDescription(description);
+        return new MovieDescription(movieDescription);
     }
 }
