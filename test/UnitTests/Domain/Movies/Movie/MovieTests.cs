@@ -381,7 +381,7 @@ public sealed class MovieTests
         var domainEvent = Assert.Single(movie.DomainEvents);
         MovieRegistered movieRegistered = Assert.IsType<MovieRegistered>(domainEvent);
         Assert.Equal(id, movieRegistered.MovieId);
-        Assert.Equal(title, movieRegistered.Title);
+        Assert.Equal(title.Value, movieRegistered.Title);
     }
 
     [Fact]
@@ -675,11 +675,11 @@ public sealed class MovieTests
         var domainEvent = Assert.Single(movie.DomainEvents);
         MovieRegistered movieRegistered = Assert.IsType<MovieRegistered>(domainEvent);
         Assert.Equal(id, movieRegistered.MovieId);
-        Assert.Equal(title, movieRegistered.Title);
-        Assert.Equal(releaseYear, movieRegistered.ReleaseYear);
-        Assert.Equal(duration, movieRegistered.Duration);
-        Assert.Equal(ageRating, movieRegistered.AgeRating);
-        Assert.Equal(posterUrl, movieRegistered.PosterUrl);
+        Assert.Equal(title.Value, movieRegistered.Title);
+        Assert.Equal(releaseYear.Value, movieRegistered.ReleaseYear);
+        Assert.Equal(duration.Value, movieRegistered.Duration);
+        Assert.Equal((int)ageRating.Value, movieRegistered.AgeRating);
+        Assert.Equal(posterUrl.Value, movieRegistered.PosterUrl);
         Assert.Equal(2, movieRegistered.Genres.Count);
         Assert.Equal(2, movieRegistered.Actors.Count);
     }
@@ -829,11 +829,11 @@ public sealed class MovieTests
         // Assert
         MovieDetailsChanged domainEvent = Assert.IsType<MovieDetailsChanged>(Assert.Single(movie.DomainEvents));
         Assert.Equal(movie.Id, domainEvent.MovieId);
-        Assert.Equal(newTitle, domainEvent.Title);
-        Assert.Equal(newDescription, domainEvent.Description);
-        Assert.Equal(newReleaseYear, domainEvent.ReleaseYear);
-        Assert.Equal(newAgeRating, domainEvent.AgeRating);
-        Assert.Equal(newPosterUrl, domainEvent.PosterUrl);
+        Assert.Equal(newTitle.Value, domainEvent.Title);
+        Assert.Equal(newDescription.Value, domainEvent.Description);
+        Assert.Equal(newReleaseYear.Value, domainEvent.ReleaseYear);
+        Assert.Equal((int)newAgeRating.Value, domainEvent.AgeRating);
+        Assert.Equal(newPosterUrl.Value, domainEvent.PosterUrl);
         Assert.Equal(2, domainEvent.Genres.Count);
         Assert.Equal(2, domainEvent.Actors.Count);
     }

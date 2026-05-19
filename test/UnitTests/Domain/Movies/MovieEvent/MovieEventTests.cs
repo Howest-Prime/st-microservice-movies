@@ -52,7 +52,7 @@ public sealed class MovieEventTests
         Assert.Equal(bookingId, domainEvent.BookingId);
         Assert.Equal(movieId, domainEvent.MovieId);
         Assert.Equal(roomId, domainEvent.RoomId);
-        Assert.Equal(showTime, domainEvent.ShowTime);
+        Assert.Equal(showTime.Value, domainEvent.ShowTime);
         Assert.Equal(2, domainEvent.StandardVisitors);
         Assert.Equal(1, domainEvent.DiscountVisitors);
     }

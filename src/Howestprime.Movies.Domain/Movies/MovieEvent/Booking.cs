@@ -9,7 +9,7 @@ public sealed class Booking : Entity<BookingId>
     public PaymentStatus PaymentStatus { get; private set; } = PaymentStatus.Pending;
     public int StandardVisitors {get; private set;}
     public int DiscountVisitors {get; private set;}
-    public IReadOnlyList<string> SeatNumbers {get; private set;}
+    public IReadOnlyList<int> SeatNumbers {get; private set;}
 
     public int TotalVisitors => StandardVisitors + DiscountVisitors;
 
@@ -20,7 +20,7 @@ public sealed class Booking : Entity<BookingId>
         BookingId id,
         int standardVisitors,
         int discountVisitors,
-        IReadOnlyList<string> bookingSeats
+        IReadOnlyList<int> bookingSeats
     ) : base(id)
     {
         StandardVisitors = standardVisitors;
@@ -59,7 +59,7 @@ public sealed class Booking : Entity<BookingId>
         BookingStatus = BookingStatus.Closed;
         PaymentStatus = paymentStatus;
         SeatNumbers = paymentStatus == PaymentStatus.Failed 
-                                ? new List<string>() 
+                                ? new List<int>() 
                                 : SeatNumbers;
 
         return this;
@@ -71,16 +71,17 @@ public sealed class Booking : Entity<BookingId>
        Asserts.EnsureGreaterThan(TotalVisitors, 0);
     }
 
-    private static IReadOnlyList<string> GenerateSeatNumbers(
+    private static IReadOnlyList<int> GenerateSeatNumbers(
         int totalVisitors,
         int startSeatNumber
     )
     {
-        IList<string> seats = new List<string>();
+        IList<int> seats = new List<int>();
 
         for (int i = 0; i < totalVisitors; i++)
         {
-            seats.Add((startSeatNumber + i).ToString());
+            int seatNr = startSeatNumber + i;
+            seats.Add(seatNr);
         }
 
         return seats.AsReadOnly();

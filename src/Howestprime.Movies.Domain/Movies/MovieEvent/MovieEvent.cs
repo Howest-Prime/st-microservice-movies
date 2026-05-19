@@ -68,10 +68,10 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
             newBookingId,
             MovieId,
             RoomId,
-            ShowTime,
+            ShowTime.Value,
             standardVisitors,
             discountVisitors,
-            Bookings.ToList()
+            Bookings.SelectMany(b => b.SeatNumbers).ToList().AsReadOnly()
         ));
 
         return newBookingId;

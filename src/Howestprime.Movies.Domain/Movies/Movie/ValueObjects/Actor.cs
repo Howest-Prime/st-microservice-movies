@@ -14,11 +14,11 @@ public sealed record Actor : ValueObject
     }
 
     public static Actor Create(
-        string name
+        string actorName
     )
     {
-        string trimmedName = name?.Trim() ?? string.Empty;
-        Asserts.EnsureNotEmpty(trimmedName);
+        string trimmedName = actorName?.Trim() ?? string.Empty;
+        Asserts.EnsureNotEmpty(trimmedName , nameof(actorName));
         return new Actor(trimmedName);
     }
 }

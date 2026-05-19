@@ -7,22 +7,20 @@ public sealed class BookingOpened : MovieEventDomainEvent
     public BookingId BookingId { get; private init; }
     public Guid MovieId { get; private init; }
     public Guid RoomId { get; private init; }
-    public MovieEventShowTime ShowTime { get; private init; }
+    public DateTimeOffset ShowTime { get; private init; }
     public int StandardVisitors { get; private init; }
     public int DiscountVisitors { get; private init; }
-    public IReadOnlyList<Booking> Bookings { get; private init; }
-    
-
+    public IReadOnlyList<int> SeatNumbers { get; private init; }
 
     private BookingOpened(
         BookingId bookingId,
         Guid movieId,
         Guid roomId,
-        MovieEventShowTime showTime,
+        DateTimeOffset showTime,
         int standardVisitors,
         int discountVisitors,
-        IReadOnlyList<Booking> bookings
-    ) : base(nameof(BookingOpened) )
+        IReadOnlyList<int> bookingIds
+    ) : base(nameof(BookingOpened))
     {
         BookingId = bookingId;
         MovieId = movieId;
@@ -30,17 +28,17 @@ public sealed class BookingOpened : MovieEventDomainEvent
         ShowTime = showTime;
         StandardVisitors = standardVisitors;
         DiscountVisitors = discountVisitors;
-        Bookings = bookings;
+        SeatNumbers = bookingIds;
     }
 
     public static BookingOpened Create(
         BookingId bookingId,
         Guid movieId,
         Guid roomId,
-        MovieEventShowTime showTime,
+        DateTimeOffset showTime,
         int standardVisitors,
         int discountVisitors,
-        IReadOnlyList<Booking> bookings
+        IReadOnlyList<int> seatNumbers
     )
     {
         return new BookingOpened(
@@ -50,8 +48,7 @@ public sealed class BookingOpened : MovieEventDomainEvent
             showTime,
             standardVisitors,
             discountVisitors,
-            bookings
+            seatNumbers
         );
     }
-    
 }

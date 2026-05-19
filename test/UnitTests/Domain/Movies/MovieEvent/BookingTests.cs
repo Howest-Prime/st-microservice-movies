@@ -19,7 +19,7 @@ public sealed class BookingTests
         Assert.Equal(BookingStatus.Open, booking.BookingStatus);
         Assert.Equal(PaymentStatus.Pending, booking.PaymentStatus);
         Assert.Equal(3, booking.TotalVisitors);
-        Assert.Equal(["5", "6", "7"], booking.SeatNumbers);
+        Assert.Equal([5, 6, 7], booking.SeatNumbers);
     }
 
     [Fact]
@@ -48,7 +48,7 @@ public sealed class BookingTests
         Assert.Same(booking, closedBooking);
         Assert.Equal(BookingStatus.Closed, booking.BookingStatus);
         Assert.Equal(PaymentStatus.Success, booking.PaymentStatus);
-        Assert.Equal(["1", "2"], booking.SeatNumbers);
+        Assert.Equal([1, 2], booking.SeatNumbers);
     }
 
     [Fact]

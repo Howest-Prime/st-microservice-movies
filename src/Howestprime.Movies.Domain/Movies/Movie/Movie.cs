@@ -58,7 +58,16 @@ public sealed class Movie : AggregateRoot<MovieId>
         Movie movie = new(id, title, description, genres, actors, releaseYear, duration, ageRating, posterUrl);
         movie.ValidateState();
         movie.RaiseDomainEvent(
-            MovieRegistered.Create(id, title, genres, actors, releaseYear, duration, ageRating, posterUrl)
+            MovieRegistered.Create(
+                id,
+                title.Value,
+                genres.Select(g => g.Value).ToList().AsReadOnly(),
+                actors.Select(a => a.Name).ToList().AsReadOnly(),
+                releaseYear.Value,
+                duration.Value,
+                (int)ageRating.Value,
+                posterUrl.Value
+            )
         );
         return movie;
     }
@@ -74,7 +83,16 @@ public sealed class Movie : AggregateRoot<MovieId>
         PosterUrl = posterUrl;
 
         RaiseDomainEvent(
-            new MovieDetailsChanged(Id, Title, Description, ReleaseYear, Genres, Actors, AgeRating, PosterUrl)
+            new MovieDetailsChanged(
+                Id,
+                Title.Value,
+                Description.Value,
+                ReleaseYear.Value,
+                Genres.Select(g => g.Value).ToList().AsReadOnly(),
+                Actors.Select(a => a.Name).ToList().AsReadOnly(),
+                (int)AgeRating.Value,
+                PosterUrl.Value
+            )
         );
 
         
