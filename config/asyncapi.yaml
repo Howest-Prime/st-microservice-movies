@@ -57,6 +57,18 @@ channels:
           type: topic
           routingKey: howestprime.movies.movie.movieregistered
 
+  MovieDetailsChanged:
+    messages:
+      MovieDetailsChanged:
+        $ref: '#/components/messages/MovieDetailsChanged'
+    bindings:
+      amqp:
+        is: routingKey
+        exchange:
+          name: howestprime
+          type: topic
+          routingKey: howestprime.movies.movie.moviedetailschanged
+
   BookingOpened:
     messages:
       BookingOpened:
@@ -95,6 +107,14 @@ operations:
     description: Publishes a MovieRegistered event when a new movie is registered.
     messages:
       - $ref: '#/channels/MovieRegistered/messages/MovieRegistered'
+
+  MovieDetailsChanged:
+    action: send
+    channel:
+      $ref: '#/channels/MovieDetailsChanged'
+    description: Publishes a MovieDetailsChanged event when movie details are updated.
+    messages:
+      - $ref: '#/channels/MovieDetailsChanged/messages/MovieDetailsChanged'
 
   BookingOpened:
     action: send
@@ -144,6 +164,44 @@ components:
           - ageRating
           - posterUrl
 
+    MovieDetailsChanged:
+      name: MovieDetailsChanged
+      title: Movie Details Changed
+      summary: Indicates the details of an existing movie have been updated.
+      payload:
+        type: object
+        properties:
+          movieId:
+            type: string
+            format: uuid
+          title:
+            type: string
+          description:
+            type: string
+          releaseYear:
+            type: integer
+          genres:
+            type: array
+            items:
+              type: string
+          actors:
+            type: array
+            items:
+              type: string
+          ageRating:
+            type: integer
+          posterUrl:
+            type: string
+        required:
+          - movieId
+          - title
+          - description
+          - releaseYear
+          - genres
+          - actors
+          - ageRating
+          - posterUrl
+
     BookingOpened:
       name: BookingOpened
       title: Booking Opened
@@ -153,16 +211,19 @@ components:
         properties:
           bookingId:
             type: string
+            format: uuid
           movieId:
             type: string
-          room:
+            format: uuid
+          roomId:
             type: string
-          showtime:
+            format: uuid
+          showTime:
             type: string
             format: date-time
           standardVisitors:
             type: integer
-          discountedVisitors:
+          discountVisitors:
             type: integer
           seatNumbers:
             type: array
@@ -171,10 +232,10 @@ components:
         required:
           - bookingId
           - movieId
-          - room
-          - showtime
+          - roomId
+          - showTime
           - standardVisitors
-          - discountedVisitors
+          - discountVisitors
           - seatNumbers
 
     PaymentFailed:
