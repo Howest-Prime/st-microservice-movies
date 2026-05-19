@@ -1,4 +1,3 @@
-using Howestprime.Movies.Domain.Movies.MovieEvent;
 using Howestprime.Movies.Domain.Movies.MovieEvent.Events;
 using Howestprime.Movies.Domain.Movies.MovieEvent.ValueObjects;
 
@@ -13,9 +12,8 @@ public sealed class BookingOpenedTests
         BookingId bookingId = new(Guid.NewGuid());
         Guid movieId = Guid.NewGuid();
         Guid roomId = Guid.NewGuid();
-        MovieEventShowTime showTime = MovieEventShowTime.Create(DateTime.Now.Date.AddDays(1).AddHours(15));
-        Booking booking = Booking.Create(bookingId, 1, 1, 1);
-        IReadOnlyList<Booking> bookings = [booking];
+        DateTimeOffset showTime = DateTimeOffset.UtcNow.Date.AddDays(1).AddHours(15);
+        IReadOnlyList<int> seatNumbers = [1, 2];
 
         // Act
         BookingOpened domainEvent = BookingOpened.Create(
@@ -25,7 +23,7 @@ public sealed class BookingOpenedTests
             showTime,
             standardVisitors: 1,
             discountVisitors: 1,
-            bookings
+            seatNumbers
         );
 
         // Assert
@@ -35,7 +33,7 @@ public sealed class BookingOpenedTests
         Assert.Equal(showTime, domainEvent.ShowTime);
         Assert.Equal(1, domainEvent.StandardVisitors);
         Assert.Equal(1, domainEvent.DiscountVisitors);
-        Assert.Same(bookings, domainEvent.Bookings);
+        Assert.Equal(seatNumbers, domainEvent.SeatNumbers);
         Assert.Equal("Howestprime.Movies.MovieEvent.BookingOpened", domainEvent.FQDN);
     }
 }

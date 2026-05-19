@@ -10,13 +10,13 @@ public sealed class MovieRegisteredTests
     {
         // Arrange
         MovieId movieId = new(Guid.NewGuid());
-        MovieTitle title = MovieTitle.Create("Inception");
-        List<MovieGenre> genres = [MovieGenre.Create("Sci-Fi")];
-        List<Actor> actors = [Actor.Create("Leonardo DiCaprio")];
-        MovieReleaseYear releaseYear = MovieReleaseYear.Create(2010);
-        MovieDuration duration = MovieDuration.Create(148);
-        AgeRating ageRating = AgeRating.From(12);
-        PosterUrl posterUrl = PosterUrl.Create("https://example.com/poster.jpg");
+        string title = "Inception";
+        IReadOnlyList<string> genres = ["Sci-Fi"];
+        IReadOnlyList<string> actors = ["Leonardo DiCaprio"];
+        int releaseYear = 2010;
+        int duration = 148;
+        int ageRating = 12;
+        string posterUrl = "https://example.com/poster.jpg";
 
         // Act
         MovieRegistered domainEvent = MovieRegistered.Create(
@@ -46,24 +46,17 @@ public sealed class MovieRegisteredTests
     {
         // Arrange
         MovieId movieId = new(Guid.NewGuid());
-        MovieTitle title = MovieTitle.Create("Movie");
-        List<MovieGenre> genres = [];
-        List<Actor> actors = [];
-        MovieReleaseYear releaseYear = MovieReleaseYear.Create(2020);
-        MovieDuration duration = MovieDuration.Create(100);
-        AgeRating ageRating = AgeRating.From(12);
-        PosterUrl posterUrl = PosterUrl.Create("https://example.com/poster.jpg");
 
         // Act
         MovieRegistered domainEvent = MovieRegistered.Create(
             movieId,
-            title,
-            genres,
-            actors,
-            releaseYear,
-            duration,
-            ageRating,
-            posterUrl
+            "Movie",
+            [],
+            [],
+            2020,
+            100,
+            12,
+            "https://example.com/poster.jpg"
         );
 
         // Assert

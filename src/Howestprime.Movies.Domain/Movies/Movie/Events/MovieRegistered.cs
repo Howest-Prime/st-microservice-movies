@@ -4,44 +4,44 @@ namespace Howestprime.Movies.Domain.Movies.Movie.Events;
 public sealed class MovieRegistered : MovieDomainEvent
 {
     public MovieId MovieId { get; private init; }
-    public MovieTitle Title { get; private init; }
-    public IReadOnlyList<MovieGenre> Genres { get; private init; }
-    public IReadOnlyList<Actor> Actors { get; private init; }
-    public MovieReleaseYear ReleaseYear { get; private init; }
-    public MovieDuration Duration { get; private init; }
-    public AgeRating AgeRating { get; private init; }
-    public PosterUrl PosterUrl { get; private init; }
+    public string Title { get; private init; }
+    public IReadOnlyList<string> Genres { get; private init; }
+    public IReadOnlyList<string> Actors { get; private init; }
+    public int ReleaseYear { get; private init; }
+    public int Duration { get; private init; }
+    public int AgeRating { get; private init; }
+    public string PosterUrl { get; private init; }
 
     private MovieRegistered(
-        MovieId movieId, 
-        MovieTitle title, 
-        IReadOnlyList<MovieGenre> genres, 
-        IReadOnlyList<Actor> actors, 
-        MovieReleaseYear releaseYear, 
-        MovieDuration duration, 
-        AgeRating ageRating, 
-        PosterUrl posterUrl
+        MovieId movieId,
+        string title,
+        IReadOnlyList<string> genres,
+        IReadOnlyList<string> actors,
+        int releaseYear,
+        int duration,
+        int ageRating,
+        string posterUrl
     ) : base(nameof(MovieRegistered))
     {
         MovieId = movieId;
         Title = title;
         Genres = genres;
+        Actors = actors;
         ReleaseYear = releaseYear;
         Duration = duration;
-        Actors = actors;
         AgeRating = ageRating;
         PosterUrl = posterUrl;
     }
 
     public static MovieRegistered Create(
-        MovieId movieId, 
-        MovieTitle title, 
-        IReadOnlyList<MovieGenre> genres, 
-        IReadOnlyList<Actor> actors, 
-        MovieReleaseYear releaseYear, 
-        MovieDuration duration, 
-        AgeRating ageRating, 
-        PosterUrl posterUrl)
+        MovieId movieId,
+        string title,
+        IReadOnlyList<string> genres,
+        IReadOnlyList<string> actors,
+        int releaseYear,
+        int duration,
+        int ageRating,
+        string posterUrl)
     {
         return new MovieRegistered(
             movieId, title, genres, actors, releaseYear, duration, ageRating, posterUrl
