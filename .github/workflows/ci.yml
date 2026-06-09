@@ -79,7 +79,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Publish .NET app
-        run: dotnet publish --os linux /t:PublishContainer /p:PublishProfile=test
+        run: dotnet publish --os linux /t:PublishContainer /p:PublishProfile=production
 
   deploy:
     runs-on: ubuntu-latest
