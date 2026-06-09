@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Aornis;
 using Howestprime.Movies.Application.Contracts.Data.MovieEvents;
 using Howestprime.Movies.Application.Contracts.Ports;
@@ -11,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents;
 
 public sealed record GetMovieEventsByMonthRequest(
-    [FromQuery] int Year,
-    [FromQuery] int Month,
+    [FromQuery] [Required] [Range(1988, 2050)]int Year,
+    [FromQuery] [Required] [Range(1, 12)] int Month,
     [FromServices] IUseCase<SearchMovieEventsInTimeRangeInput, Optional<IReadOnlyList<MovieEventData>>> UseCase
 );
 

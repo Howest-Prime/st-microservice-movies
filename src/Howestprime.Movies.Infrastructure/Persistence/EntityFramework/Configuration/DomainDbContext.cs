@@ -22,7 +22,7 @@ public abstract class DomainDbContext : DbContext
     {
         base.ConfigureConventions(configurationBuilder);
 
-        AddConventionsForEntityIds(configurationBuilder);
+        EntityIdConverter.AddConventions(configurationBuilder);
         SinglePropertyValueObjectConverter.AddConventions(configurationBuilder);
     }
 
@@ -50,20 +50,4 @@ public abstract class DomainDbContext : DbContext
         _queuedDomainEvents.Clear();
     }
 
-    private static void AddConventionsForEntityIds(ModelConfigurationBuilder configurationBuilder)
-    {
-        var entityIdTypes = typeof(IEntityId).Assembly
-            .GetTypes()
-            .Where(type =>
-                type.IsValueType &&
-                !type.IsAbstract &&
-                type.IsAssignableTo(typeof(IEntityId))
-            );
-
-        foreach (var type in entityIdTypes)
-        {
-            var converterType = typeof(EntityIdConverter<>).MakeGenericType(type);
-            configurationBuilder.Properties(type).HaveConversion(converterType);
-        }
-    }
 }

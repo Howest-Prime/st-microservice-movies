@@ -34,7 +34,7 @@ public sealed class MovieEventConfiguration : IEntityTypeConfiguration<MovieEven
             .HasConversion(
                     v => v.Value,
                     v => EntityId.New<BookingId>(v))
-                    .IsRequired();
+                    .IsRequired();//needs cleanup, should be handled by the id converter
 
             actorBuilder.Property(booking => booking.BookingStatus)
                     .HasConversion<string>()

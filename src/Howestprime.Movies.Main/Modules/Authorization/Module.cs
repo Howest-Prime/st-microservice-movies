@@ -1,8 +1,3 @@
-using Howestprime.Movies.Main.Modules.Application;
-using Howestprime.Movies.Main.Modules.Messaging.DomainEvents;
-using Howestprime.Movies.Main.Modules.Messaging.IntegrationEvents;
-using Howestprime.Movies.Main.Modules.Persistence.EntityFramework;
-using Howestprime.Movies.Main.Modules.WebApi;
 using Howestprime.Movies.Infrastructure.Authorization;
 using Howestprime.Movies.Infrastructure.Authorization.Configuration;
 using Howestprime.Movies.Application.Contracts.Ports;
