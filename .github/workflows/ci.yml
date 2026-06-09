@@ -63,6 +63,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    needs: unit-tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -79,7 +80,12 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Publish .NET app
-        run: dotnet publish --os linux /t:PublishContainer /p:PublishProfile=production
+        run: |
+          dotnet publish --os linux /t:PublishContainer \
+            /p:PublishProfile=production \
+            /p:ContainerRegistry=${{ vars.AZ_CONTAINER_REGISTRY }} \
+            /p:ContainerRepository=microservice-movies \
+            /p:ContainerImageTag=1.0.0
 
   deploy:
     runs-on: ubuntu-latest
