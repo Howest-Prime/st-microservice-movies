@@ -81,7 +81,8 @@ jobs:
 
       - name: Publish .NET app
         run: |
-          dotnet publish --os linux /t:PublishContainer \
+          dotnet publish src/Howestprime.Movies.Main/Howestprime.Movies.Main.csproj \
+            --os linux /t:PublishContainer \
             /p:PublishProfile=production \
             /p:ContainerRegistry=${{ vars.AZ_CONTAINER_REGISTRY }} \
             /p:ContainerRepository=microservice-movies \
